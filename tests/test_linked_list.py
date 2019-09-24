@@ -16,14 +16,14 @@ def empty_list():
 @pytest.fixture
 def single_list(empty_list):
     """Linked list with single value."""
-    empty_list.add_end("value 1")
+    empty_list.add_last("value 1")
     return empty_list
 
 
 @pytest.fixture
 def multiple_list(single_list):
     """Linked list with multiple values."""
-    single_list.add_end("value 2")
+    single_list.add_last("value 2")
     return single_list
 
 
@@ -78,7 +78,7 @@ def test_linked_list_add_empty(empty_list):
     list_ = linked_list.LinkedList()
     value = "value 1"
 
-    list_.add(value)
+    list_.add_first(value)
 
     assert list_.head.value == value
     assert list_.head.next_ == None
@@ -92,7 +92,7 @@ def test_linked_list_add_single(single_list):
     """
     value = "value 2"
 
-    single_list.add(value)
+    single_list.add_first(value)
 
 
     assert single_list.head.value == value
@@ -109,7 +109,7 @@ def test_linked_list_add_multiple(multiple_list):
     """
     value = "value 3"
 
-    multiple_list.add(value)
+    multiple_list.add_first(value)
 
     assert multiple_list.head.value == value
 
@@ -124,7 +124,7 @@ def test_linked_list_add_end_empty(empty_list):
     list_ = linked_list.LinkedList()
     value = "value 1"
 
-    list_.add_end(value)
+    list_.add_last(value)
 
     assert list_.head.value == value
     assert list_.head.next_ == None
@@ -138,7 +138,7 @@ def test_linked_list_add_end_single(single_list):
     """
     value = "value 2"
 
-    single_list.add_end(value)
+    single_list.add_last(value)
 
     assert single_list.head.next_ is not None
     assert single_list.head.next_.value == value
@@ -153,7 +153,7 @@ def test_linked_list_add_end_multiple(multiple_list):
     """
     value = "value 3"
 
-    multiple_list.add_end(value)
+    multiple_list.add_last(value)
 
     assert multiple_list.head.next_.next_.value == value
 

@@ -27,7 +27,7 @@ class LinkedList:
         Construct."""
         self.head = None
 
-    def add(self, value):
+    def add_first(self, value):
         """
         Add value to the front of the list.
 
@@ -37,7 +37,7 @@ class LinkedList:
         """
         self.head = Node(value, self.head)
 
-    def add_end(self, value):
+    def add_last(self, value):
         """
         Add value to end of the linked list.
 
@@ -51,10 +51,10 @@ class LinkedList:
             return
 
         # Add new node
-        self._add_end(self.head, value)
+        self._add_last(self.head, value)
 
     @classmethod
-    def _add_end(cls, node, value):
+    def _add_last(cls, node, value):
         """
         Recursively add value.
 
@@ -72,7 +72,7 @@ class LinkedList:
             return
 
         # Recursively go to next node
-        cls._add_end(node.next_, value)
+        cls._add_last(node.next_, value)
 
     def traverse(self, func):
         """
