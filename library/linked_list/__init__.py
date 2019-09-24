@@ -47,7 +47,7 @@ class LinkedList:
         """
         # Checking for empty list
         if self.head is None:
-            self.head = Node(value)
+            self.add_first(value)
             return
 
         # Add new node
@@ -56,7 +56,7 @@ class LinkedList:
     @classmethod
     def _add_last(cls, node, value):
         """
-        Recursively add value.
+        Recursively add value. Could also be done as a while loop.
 
         Checks if the node next_ property is None. if it is, it creates a new Node and
         sets it to the next_ property.
