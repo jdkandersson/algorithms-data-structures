@@ -27,6 +27,13 @@ def multiple_list(single_list):
     return single_list
 
 
+@pytest.fixture
+def duplicate_list(single_list):
+    """Linked list with duplicate values."""
+    single_list.add_last("value 1")
+    return single_list
+
+
 def test_node_construct_no_next():
     """
     GIVEN value for node
@@ -114,10 +121,10 @@ def test_add_multiple(multiple_list):
     assert multiple_list.head.value == value
 
 
-def test_add_end_empty(empty_list):
+def test_add_last_empty(empty_list):
     """
-    GIVEN empty linked list value to add_end
-    WHEN add_end is called with the value
+    GIVEN empty linked list value to add_last
+    WHEN add_last is called with the value
     THEN head is replaced with a Node with value set to input value and next_ set to
         None.
     """
@@ -130,10 +137,10 @@ def test_add_end_empty(empty_list):
     assert list_.head.next_ == None
 
 
-def test_add_end_single(single_list):
+def test_add_last_single(single_list):
     """
     GIVEN linked list with single node and a value
-    WHEN add_end is called with the value
+    WHEN add_last is called with the value
     THEN head references a Node with the value and None for next_.
     """
     value = "value 2"
@@ -145,10 +152,10 @@ def test_add_end_single(single_list):
     assert single_list.head.next_.next_ is None
 
 
-def test_add_end_multiple(multiple_list):
+def test_add_last_multiple(multiple_list):
     """
     GIVEN linked list with two nodes and a value
-    WHEN add_end is called with the value
+    WHEN add_last is called with the value
     THEN the second node has the value.
     """
     value = "value 3"
@@ -322,6 +329,19 @@ def test_insert_after_multiple(multiple_list, key, expected_list):
     assert list(iter(multiple_list)) == expected_list
 
 
+def test_insert_after_duplicate(duplicate_list):
+    """
+    GIVEN duplicate item list, value and key that is equal to the duplicate value
+    WHEN insert_after is called with the value and key
+    THEN new value is inserted after the first matched item.
+    """
+    value = "value 2"
+
+    duplicate_list.insert_after("value 1", value)
+
+    assert list(iter(duplicate_list)) == ["value 1", "value 2", "value 1"]
+
+
 def test_insert_before_empty(empty_list):
     """
     GIVEN empty list and value
@@ -375,6 +395,19 @@ def test_insert_before_multiple(multiple_list, key, expected_list):
     assert list(iter(multiple_list)) == expected_list
 
 
+def test_insert_before_duplicate(duplicate_list):
+    """
+    GIVEN duplicate item list, value and key that is equal to the duplicate value
+    WHEN insert_before is called with the value and key
+    THEN new value is inserted before the first matched item.
+    """
+    value = "value 2"
+
+    duplicate_list.insert_before("value 1", value)
+
+    assert list(iter(duplicate_list)) == ["value 2", "value 1", "value 1"]
+
+
 def test_delete_empty(empty_list):
     """
     GIVEN empty list and key
@@ -422,3 +455,16 @@ def test_delete_multiple(multiple_list, key, expected_list):
     multiple_list.delete(key)
 
     assert list(iter(multiple_list)) == expected_list
+
+
+def test_delete_duplicate(duplicate_list):
+    """
+    GIVEN duplicate item list and value that is equal to the duplicate value
+    WHEN delete is called with the value
+    THEN the first matched value is removed from the list.
+    """
+    value = "value 1"
+
+    duplicate_list.delete(value)
+
+    assert list(iter(duplicate_list)) == ["value 1"]
