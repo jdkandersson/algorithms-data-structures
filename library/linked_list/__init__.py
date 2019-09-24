@@ -133,3 +133,10 @@ class LinkedList:
             return True
 
         return cls._search(node.next_, value)
+
+    def __iter__(self):
+        """Iterate over list."""
+        node = self.head
+        while node is not None:
+            yield node.value
+            node = node.next_

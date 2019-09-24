@@ -240,3 +240,46 @@ def test_linked_list_found_multiple(multiple_list, value, expected_found):
     found = multiple_list.search(value)
 
     assert found == expected_found
+
+
+def test_linked_list_iter_empty(empty_list):
+    """
+    GIVEN empty list
+    WHEN list is iterated
+    THEN empty generator is returned.
+    """
+    assert list(iter(empty_list)) == []
+
+
+def test_linked_list_iter_single(single_list):
+    """
+    GIVEN single list
+    WHEN list is iterated
+    THEN generator with single item is returned.
+    """
+    assert list(iter(single_list)) == ["value 1"]
+
+
+def test_linked_list_iter_multiple(multiple_list):
+    """
+    GIVEN multiple list
+    WHEN list is iterated
+    THEN generator with multiple items is returned.
+    """
+    assert list(iter(multiple_list)) == ["value 1", "value 2"]
+
+
+def test_add_after_empty(empty_list):
+    """
+    GIVEN empty list and value
+    WHEN add_after is called with the value
+    THEN value is added as the head.
+    """
+
+
+def test_add_after_single(empty_list):
+    """
+    GIVEN empty list and value
+    WHEN add_after is called with the value
+    THEN value is added as the head.
+    """
