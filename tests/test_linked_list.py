@@ -80,17 +80,12 @@ def multiple_list():
 
 def test_linked_list_add_multiple(multiple_list):
     """
-    GIVEN linked list with multiple node and a value
+    GIVEN linked list with two nodes and a value
     WHEN add is called with the value
-    THEN the first element with None next_ property contains the value.
+    THEN the second node has the value.
     """
-    value = "value -1"
+    value = "value 3"
 
     multiple_list.add(value)
 
-    counter = 0
-    node = multiple_list.head
-    while counter < 100 and node.next_ is not None:
-        node = node.next_
-        counter += 1
-    assert node.value == value
+    assert multiple_list.head.next_.next_.value == value
