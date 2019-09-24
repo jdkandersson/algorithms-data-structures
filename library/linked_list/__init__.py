@@ -62,3 +62,32 @@ class LinkedList:
 
         # Recursively go to next node
         cls._add(node.next_, value)
+
+    def traverse(self, func):
+        """
+        Call function on each value in the list.
+
+        Args:
+            func: The function to call each value with.
+
+        """
+        self._traverse(self.head, func)
+
+    @classmethod
+    def _traverse(cls, node, func):
+        """
+        Call function with the value of the node.
+
+        If the node is NOne the function is not called.
+
+        Args:
+            node: The node to call the function with.
+            func: The function to call.
+
+        """
+        # Checking for last node
+        if node is None:
+            return
+
+        func(node.value)
+        cls._traverse(node.next_, func)
