@@ -57,7 +57,7 @@ def test_node_construct_with_next():
     assert node.next_ .value == "value 1"
 
 
-def test_linked_list_construct():
+def test_construct():
     """
     GIVEN
     WHEN linked list is constructed
@@ -68,7 +68,7 @@ def test_linked_list_construct():
     assert list_.head is None
 
 
-def test_linked_list_add_empty(empty_list):
+def test_add_empty(empty_list):
     """
     GIVEN empty linked list value to add
     WHEN add is called with the value
@@ -84,7 +84,7 @@ def test_linked_list_add_empty(empty_list):
     assert list_.head.next_ == None
 
 
-def test_linked_list_add_single(single_list):
+def test_add_single(single_list):
     """
     GIVEN linked list with single node and a value
     WHEN add is called with the value
@@ -101,7 +101,7 @@ def test_linked_list_add_single(single_list):
     assert single_list.head.next_.next_ is None
 
 
-def test_linked_list_add_multiple(multiple_list):
+def test_add_multiple(multiple_list):
     """
     GIVEN linked list with two nodes and a value
     WHEN add is called with the value
@@ -114,7 +114,7 @@ def test_linked_list_add_multiple(multiple_list):
     assert multiple_list.head.value == value
 
 
-def test_linked_list_add_end_empty(empty_list):
+def test_add_end_empty(empty_list):
     """
     GIVEN empty linked list value to add_end
     WHEN add_end is called with the value
@@ -130,7 +130,7 @@ def test_linked_list_add_end_empty(empty_list):
     assert list_.head.next_ == None
 
 
-def test_linked_list_add_end_single(single_list):
+def test_add_end_single(single_list):
     """
     GIVEN linked list with single node and a value
     WHEN add_end is called with the value
@@ -145,7 +145,7 @@ def test_linked_list_add_end_single(single_list):
     assert single_list.head.next_.next_ is None
 
 
-def test_linked_list_add_end_multiple(multiple_list):
+def test_add_end_multiple(multiple_list):
     """
     GIVEN linked list with two nodes and a value
     WHEN add_end is called with the value
@@ -158,7 +158,7 @@ def test_linked_list_add_end_multiple(multiple_list):
     assert multiple_list.head.next_.next_.value == value
 
 
-def test_linked_list_traverse_empty(empty_list):
+def test_traverse_empty(empty_list):
     """
     GIVEN empty list and mock function
     WHEN traverse is called with the mock function
@@ -171,7 +171,7 @@ def test_linked_list_traverse_empty(empty_list):
     func.assert_not_called()
 
 
-def test_linked_list_traverse_single(single_list):
+def test_traverse_single(single_list):
     """
     GIVEN single list and mock function
     WHEN traverse is called with the mock function
@@ -184,7 +184,7 @@ def test_linked_list_traverse_single(single_list):
     func.assert_called_once_with("value 1")
 
 
-def test_linked_list_traverse_multiple(multiple_list):
+def test_traverse_multiple(multiple_list):
     """
     GIVEN multiple list and mock function
     WHEN traverse is called with the mock function
@@ -199,7 +199,7 @@ def test_linked_list_traverse_multiple(multiple_list):
     func.assert_called_with("value 2")
 
 
-def test_linked_list_search_empty(empty_list):
+def test_search_empty(empty_list):
     """
     GIVEN empty list
     WHEN search is called
@@ -215,7 +215,7 @@ def test_linked_list_search_empty(empty_list):
     [("value 2", False), ("value 1", True)],
     ids=["not in list", "in list"],
 )
-def test_linked_list_found_single(single_list, value, expected_found):
+def test_found_single(single_list, value, expected_found):
     """
     GIVEN single list, value to search for and expected found value
     WHEN search is called with the value
@@ -231,7 +231,7 @@ def test_linked_list_found_single(single_list, value, expected_found):
     [("value 3", False), ("value 2", True), ("value 1", True)],
     ids=["not in list", "in list", "in list"],
 )
-def test_linked_list_found_multiple(multiple_list, value, expected_found):
+def test_found_multiple(multiple_list, value, expected_found):
     """
     GIVEN multiple list, value to search for and expected found value
     WHEN search is called with the value
@@ -242,7 +242,7 @@ def test_linked_list_found_multiple(multiple_list, value, expected_found):
     assert found == expected_found
 
 
-def test_linked_list_iter_empty(empty_list):
+def test_iter_empty(empty_list):
     """
     GIVEN empty list
     WHEN list is iterated
@@ -251,7 +251,7 @@ def test_linked_list_iter_empty(empty_list):
     assert list(iter(empty_list)) == []
 
 
-def test_linked_list_iter_single(single_list):
+def test_iter_single(single_list):
     """
     GIVEN single list
     WHEN list is iterated
@@ -260,7 +260,7 @@ def test_linked_list_iter_single(single_list):
     assert list(iter(single_list)) == ["value 1"]
 
 
-def test_linked_list_iter_multiple(multiple_list):
+def test_iter_multiple(multiple_list):
     """
     GIVEN multiple list
     WHEN list is iterated
@@ -371,5 +371,54 @@ def test_insert_before_multiple(multiple_list, key, expected_list):
     value = "value 3"
 
     multiple_list.insert_before(key, value)
+
+    assert list(iter(multiple_list)) == expected_list
+
+
+def test_delete_empty(empty_list):
+    """
+    GIVEN empty list and key
+    WHEN delete is called with the key
+    THEN list stays empty.
+    """
+    key = "value 1"
+
+    empty_list.delete(key)
+
+    assert list(iter(empty_list)) == []
+
+
+@pytest.mark.parametrize(
+    "key, expected_list",
+    [("value 2", ["value 1"]), ("value 1", [])],
+    ids=["value not in list", "value in list"]
+)
+def test_delete_single(single_list, key, expected_list):
+    """
+    GIVEN single item list, key and expected list
+    WHEN delete is called with the key
+    THEN the linked list contains the expected values in the expected order.
+    """
+    single_list.delete(key)
+
+    assert list(iter(single_list)) == expected_list
+
+
+@pytest.mark.parametrize(
+    "key, expected_list",
+    [
+        ("value 3", ["value 1", "value 2"]),
+        ("value 2", ["value 1"]),
+        ("value 1", ["value 2"]),
+    ],
+    ids=["value not in list", "value in list last", "value in list first"]
+)
+def test_delete_multiple(multiple_list, key, expected_list):
+    """
+    GIVEN multiple item list, key and expected list
+    WHEN delete is called with the key
+    THEN the linked list contains the expected values in the expected order.
+    """
+    multiple_list.delete(key)
 
     assert list(iter(multiple_list)) == expected_list

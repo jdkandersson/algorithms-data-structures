@@ -137,6 +137,33 @@ class LinkedList:
         # Inserting new node
         last_node.next_ = Node(value, node)
 
+    def delete(self, value):
+        """
+        Delete node with the value.
+
+        Args:
+            value: The value to remove from the list.
+
+        """
+        # Iterating to node that has value
+        node = self.head
+        last_node = None
+        while node is not None and node.value != value:
+            last_node = node
+            node = node.next_
+
+        # Check if the node has been found
+        if node is None:
+            return
+
+        # Checking whether head matched
+        if last_node is None:
+            self.head = node.next_
+            return
+
+        # Deleting node
+        last_node.next_ = node.next_
+
     def traverse(self, func):
         """
         Call function on each value in the list.
