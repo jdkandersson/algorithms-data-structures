@@ -27,7 +27,7 @@ def multiple_list(single_list):
     return single_list
 
 
-def test_node_construct():
+def test_node_construct_no_next():
     """
     GIVEN value for node
     WHEN node is constructed with the value
@@ -39,6 +39,22 @@ def test_node_construct():
 
     assert node.value == value
     assert node.next_ is None
+
+
+def test_node_construct_with_next():
+    """
+    GIVEN value for node and next node
+    WHEN node is constructed with the value and the next node
+    THEN the value is copied into the node and next_ is the next node.
+    """
+    next_node = linked_list.Node("value 1")
+    value = "value 2"
+
+    node = linked_list.Node(value, next_node)
+
+    assert node.value == value
+    assert node.next_  is not linked_list.Node
+    assert node.next_ .value == "value 1"
 
 
 def test_linked_list_construct():

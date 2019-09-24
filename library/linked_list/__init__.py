@@ -6,16 +6,17 @@ import typing
 class Node:
     """Represents an node in the linked list."""
 
-    def __init__(self, value):
+    def __init__(self, value, next_ = None):
         """
         Construct.
 
         Args:
             value: The value for the node.
+            next_: The node to set to next.
 
         """
         self.value = value
-        self.next_ = None
+        self.next_ = next_
 
 
 class LinkedList:
@@ -34,16 +35,7 @@ class LinkedList:
             value: The value to add to the front.
 
         """
-        node = Node(value)
-
-        # Checking for empty list
-        if self.head is None:
-            self.head = node
-            return
-
-        # Adding to front of existing list
-        node.next_ = self.head
-        self.head = node
+        self.head = Node(value, self.head)
 
     def add_end(self, value):
         """
