@@ -6,6 +6,27 @@ from unittest import mock
 from library import linked_list
 
 
+@pytest.fixture
+def empty_list():
+    """Linked list with empty value."""
+    list_ = linked_list.LinkedList()
+    return list_
+
+
+@pytest.fixture
+def single_list(empty_list):
+    """Linked list with single value."""
+    empty_list.add_end("value 1")
+    return empty_list
+
+
+@pytest.fixture
+def multiple_list(single_list):
+    """Linked list with multiple values."""
+    single_list.add_end("value 2")
+    return single_list
+
+
 def test_node_construct():
     """
     GIVEN value for node
@@ -31,11 +52,50 @@ def test_linked_list_construct():
     assert list_.head is None
 
 
-@pytest.fixture
-def empty_list():
-    """Linked list with empty value."""
+def test_linked_list_add_empty(empty_list):
+    """
+    GIVEN empty linked list value to add
+    WHEN add is called with the value
+    THEN head is replaced with a Node with value set to input value and next_ set to
+        None.
+    """
     list_ = linked_list.LinkedList()
-    return list_
+    value = "value 1"
+
+    list_.add(value)
+
+    assert list_.head.value == value
+    assert list_.head.next_ == None
+
+
+def test_linked_list_add_single(single_list):
+    """
+    GIVEN linked list with single node and a value
+    WHEN add is called with the value
+    THEN head is changed to the new value referencing the old value.
+    """
+    value = "value 2"
+
+    single_list.add(value)
+
+
+    assert single_list.head.value == value
+    assert single_list.head.next_ is not None
+    assert single_list.head.next_.value == "value 1"
+    assert single_list.head.next_.next_ is None
+
+
+def test_linked_list_add_multiple(multiple_list):
+    """
+    GIVEN linked list with two nodes and a value
+    WHEN add is called with the value
+    THEN the second node has the value.
+    """
+    value = "value 3"
+
+    multiple_list.add(value)
+
+    assert multiple_list.head.value == value
 
 
 def test_linked_list_add_end_empty(empty_list):
@@ -54,13 +114,6 @@ def test_linked_list_add_end_empty(empty_list):
     assert list_.head.next_ == None
 
 
-@pytest.fixture
-def single_list(empty_list):
-    """Linked list with single value."""
-    empty_list.add_end("value 1")
-    return empty_list
-
-
 def test_linked_list_add_end_single(single_list):
     """
     GIVEN linked list with single node and a value
@@ -74,13 +127,6 @@ def test_linked_list_add_end_single(single_list):
     assert single_list.head.next_ is not None
     assert single_list.head.next_.value == value
     assert single_list.head.next_.next_ is None
-
-
-@pytest.fixture
-def multiple_list(single_list):
-    """Linked list with multiple values."""
-    single_list.add_end("value 2")
-    return single_list
 
 
 def test_linked_list_add_end_multiple(multiple_list):

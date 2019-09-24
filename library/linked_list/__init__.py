@@ -26,6 +26,25 @@ class LinkedList:
         Construct."""
         self.head = None
 
+    def add(self, value):
+        """
+        Add value to the front of the list.
+
+        Args:
+            value: The value to add to the front.
+
+        """
+        node = Node(value)
+
+        # Checking for empty list
+        if self.head is None:
+            self.head = node
+            return
+
+        # Adding to front of existing list
+        node.next_ = self.head
+        self.head = node
+
     def add_end(self, value):
         """
         Add value to end of the linked list.
