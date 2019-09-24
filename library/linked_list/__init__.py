@@ -91,3 +91,34 @@ class LinkedList:
 
         func(node.value)
         cls._traverse(node.next_, func)
+
+    def search(self, value):
+        """
+        Check whether value is in list.
+
+        Args:
+            value: The value to search for.
+
+        """
+        return self._search(self.head, value)
+
+    @classmethod
+    def _search(cls, node, value):
+        """
+        Check whether value is in list using recursion.
+
+        If node is None return False.
+        If node value is equal to value return True.
+        Else recursively call on next_ property.
+
+        Args:
+            value: The value to search for.
+
+        """
+        if node is None:
+            return False
+
+        if node.value == value:
+            return True
+
+        return cls._search(node.next_, value)

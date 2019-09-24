@@ -135,3 +135,46 @@ def test_linked_list_traverse_multiple(multiple_list):
     assert func.call_count == 2
     func.assert_any_call("value 1")
     func.assert_called_with("value 2")
+
+
+def test_linked_list_search_empty(empty_list):
+    """
+    GIVEN empty list
+    WHEN search is called
+    THEN False is returned.
+    """
+    found = empty_list.search("value 1")
+
+    assert not found
+
+
+@pytest.mark.parametrize(
+    "value, expected_found",
+    [("value 2", False), ("value 1", True)],
+    ids=["not in list", "in list"],
+)
+def test_linked_list_found_single(single_list, value, expected_found):
+    """
+    GIVEN single list, value to search for and expected found value
+    WHEN search is called with the value
+    THEN the expected found value is returned
+    """
+    found = single_list.search(value)
+
+    assert found == expected_found
+
+
+@pytest.mark.parametrize(
+    "value, expected_found",
+    [("value 3", False), ("value 2", True), ("value 1", True)],
+    ids=["not in list", "in list", "in list"],
+)
+def test_linked_list_found_multiple(multiple_list, value, expected_found):
+    """
+    GIVEN multiple list, value to search for and expected found value
+    WHEN search is called with the value
+    THEN the expected found value is returned
+    """
+    found = multiple_list.search(value)
+
+    assert found == expected_found
