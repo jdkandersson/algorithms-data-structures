@@ -92,7 +92,8 @@ class LinkedList:
         Insert a new value after a key recursively.
 
         Args:
-            value: The value after which to insert the new value.
+            node: The node to operate on. Can be None.
+            key: The value after which to insert the new value.
             value: The new value to insert.
 
         """
@@ -107,6 +108,34 @@ class LinkedList:
 
         # Recursive case
         cls._insert_after(node.next_, key, value)
+
+    def insert_before(self, key, value):
+        """
+        Insert a new value before a key.
+
+        Args:
+            key: The value before which to insert the new value.
+            value: The new value to insert.
+
+        """
+        # Iterating to node that has value
+        node = self.head
+        last_node = None
+        while node is not None and node.value != key:
+            last_node = node
+            node = node.next_
+
+        # Check if the node has been found
+        if node is None:
+            return
+
+        # Checking whether head matched
+        if last_node is None:
+            self.add_first(value)
+            return
+
+        # Inserting new node
+        last_node.next_ = Node(value, node)
 
     def traverse(self, func):
         """

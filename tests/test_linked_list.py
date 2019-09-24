@@ -283,25 +283,25 @@ def test_insert_after_empty(empty_list):
 
 
 @pytest.mark.parametrize(
-    "insert_after_value, expected_list",
+    "key, expected_list",
     [("value 2", ["value 1"]), ("value 1", ["value 1", "value 2"])],
     ids=["value not in list", "value in list"]
 )
-def test_insert_after_single(single_list, insert_after_value, expected_list):
+def test_insert_after_single(single_list, key, expected_list):
     """
-    GIVEN single item list, value, value after which to insert and expected values
-    WHEN insert_after is called with the value and value after which to insert
+    GIVEN single item list, value, key and expected list
+    WHEN insert_after is called with the value and key
     THEN the linked list contains the expected values in the expected order.
     """
     value = "value 2"
 
-    single_list.insert_after(insert_after_value, value)
+    single_list.insert_after(key, value)
 
     assert list(iter(single_list)) == expected_list
 
 
 @pytest.mark.parametrize(
-    "insert_after_value, expected_list",
+    "key, expected_list",
     [
         ("value 3", ["value 1", "value 2"]),
         ("value 2", ["value 1", "value 2", "value 3"]),
@@ -309,14 +309,67 @@ def test_insert_after_single(single_list, insert_after_value, expected_list):
     ],
     ids=["value not in list", "value in list last", "value in list first"]
 )
-def test_insert_after_multiple(multiple_list, insert_after_value, expected_list):
+def test_insert_after_multiple(multiple_list, key, expected_list):
     """
-    GIVEN multiple item list, value, value after which to insert and expected values
-    WHEN insert_after is called with the value and value after which to insert
+    GIVEN multiple item list, value, key and expected list
+    WHEN insert_after is called with the value and key
     THEN the linked list contains the expected values in the expected order.
     """
     value = "value 3"
 
-    multiple_list.insert_after(insert_after_value, value)
+    multiple_list.insert_after(key, value)
+
+    assert list(iter(multiple_list)) == expected_list
+
+
+def test_insert_before_empty(empty_list):
+    """
+    GIVEN empty list and value
+    WHEN insert_before is called with the value
+    THEN value is not added.
+    """
+    value = "value 1"
+
+    empty_list.insert_before(value, value)
+
+    assert list(iter(empty_list)) == []
+
+
+@pytest.mark.parametrize(
+    "key, expected_list",
+    [("value 2", ["value 1"]), ("value 1", ["value 2", "value 1"])],
+    ids=["value not in list", "value in list"]
+)
+def test_insert_before_single(single_list, key, expected_list):
+    """
+    GIVEN single item list, value, key and expected list
+    WHEN insert_before is called with the value and key
+    THEN the linked list contains the expected values in the expected order.
+    """
+    value = "value 2"
+
+    single_list.insert_before(key, value)
+
+    assert list(iter(single_list)) == expected_list
+
+
+@pytest.mark.parametrize(
+    "key, expected_list",
+    [
+        ("value 3", ["value 1", "value 2"]),
+        ("value 2", ["value 1", "value 3", "value 2"]),
+        ("value 1", ["value 3", "value 1", "value 2"]),
+    ],
+    ids=["value not in list", "value in list last", "value in list first"]
+)
+def test_insert_before_multiple(multiple_list, key, expected_list):
+    """
+    GIVEN multiple item list, value, key and expected list
+    WHEN insert_before is called with the value and key
+    THEN the linked list contains the expected values in the expected order.
+    """
+    value = "value 3"
+
+    multiple_list.insert_before(key, value)
 
     assert list(iter(multiple_list)) == expected_list
