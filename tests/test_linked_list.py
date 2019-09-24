@@ -269,17 +269,54 @@ def test_linked_list_iter_multiple(multiple_list):
     assert list(iter(multiple_list)) == ["value 1", "value 2"]
 
 
-def test_add_after_empty(empty_list):
+def test_insert_after_empty(empty_list):
     """
     GIVEN empty list and value
-    WHEN add_after is called with the value
+    WHEN insert_after is called with the value
     THEN value is added as the head.
     """
+    value = "value 1"
+
+    empty_list.insert_after(value, value)
+
+    assert list(iter(empty_list)) == [value]
 
 
-def test_add_after_single(empty_list):
+@pytest.mark.parametrize(
+    "insert_after_value, expected_list",
+    [("value 2", ["value 1", "value 2"]), ("value 1", ["value 1", "value 2"])],
+    ids=["value not in list", "value in list"]
+)
+def test_insert_after_single(single_list, insert_after_value, expected_list):
     """
-    GIVEN empty list and value
-    WHEN add_after is called with the value
-    THEN value is added as the head.
+    GIVEN single item list, value, value after which to insert and expected values
+    WHEN insert_after is called with the value and value after which to insert
+    THEN the linked list contains the expected values in the expected order.
     """
+    value = "value 2"
+
+    single_list.insert_after(insert_after_value, value)
+
+    assert list(iter(single_list)) == expected_list
+
+
+@pytest.mark.parametrize(
+    "insert_after_value, expected_list",
+    [
+        ("value 3", ["value 1", "value 2", "value 3"]),
+        ("value 2", ["value 1", "value 2", "value 3"]),
+        ("value 1", ["value 1", "value 3", "value 2"]),
+    ],
+    ids=["value not in list", "value in list last", "value in list first"]
+)
+def test_insert_after_multiple(multiple_list, insert_after_value, expected_list):
+    """
+    GIVEN multiple item list, value, value after which to insert and expected values
+    WHEN insert_after is called with the value and value after which to insert
+    THEN the linked list contains the expected values in the expected order.
+    """
+    value = "value 3"
+
+    multiple_list.insert_after(insert_after_value, value)
+
+    assert list(iter(multiple_list)) == expected_list

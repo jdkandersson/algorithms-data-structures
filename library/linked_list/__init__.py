@@ -74,6 +74,45 @@ class LinkedList:
         # Recursively go to next node
         cls._add_last(node.next_, value)
 
+    def insert_after(self, value, new_value):
+        """
+        Insert a new value after some other value.
+
+        Args:
+            value: The value after which to insert the new value.
+            new_value: The new value to insert.
+
+        """
+        if self.head is None:
+            self.add_first(new_value)
+            return
+
+        self._insert_after(self.head, value, new_value)
+
+
+    @classmethod
+    def _insert_after(cls, node, value, new_value):
+        """
+        Insert a new value after some other value recursively.
+
+        Args:
+            value: The value after which to insert the new value.
+            new_value: The new value to insert.
+
+        """
+        # Base case for value not found
+        if node.next_ is None:
+            node.next_ = Node(new_value)
+            return
+
+        # Base case for value found
+        if node.value == value:
+            node.next_ = Node(new_value, node.next_)
+            return
+
+        # Recursive case
+        cls._insert_after(node.next_, value, new_value)
+
     def traverse(self, func):
         """
         Call function on each value in the list.
