@@ -30,3 +30,10 @@ To delete an object based on a key, it has to be found first. Therefore, the com
 ### Clone the List
 
 Due to the nature of the data structure, if the linked list is cloned without further consideration it is likely that only the head node is actually cloned and all the linked nodes are shared between the object. This clone method has O(1) complexity. More likely the whole list is expected to be cloned, which requires cloning each node to a new list. This has O(n) complexity.
+
+
+### Observations
+
+Some of the linked list functions are easier to implement recursively and others using a loop. All operations can be implemented using a loop, some are a little cleaner recursively, although potentially harder to understand for someone not as familiar with coding. In Python, recursive is a little dangerous due to the limit that is placed on the number of recursive calls meaning that, depending on the size of the linked list, recursively implemented operations may fail. For a production environment in Python it is likely better to avoid recursive implementations of linked list operations.
+
+Sometimes it is easy to combine base cases for linked list operations with checks for empty lists, and other times it isn't possible. Usually if a new node is added or a node is deleted from the list special considerations for empty lists have to be taken. For traversing the liked list you can usually roll the empty list check into the base case/end of loop check.
