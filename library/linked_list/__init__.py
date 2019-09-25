@@ -230,3 +230,30 @@ class LinkedList:
         while node is not None:
             yield node.value
             node = node.next_
+
+    def clone(self):
+        """
+        Deep clone the list.
+
+        Returns:
+            A new list with the values from the current list.
+
+        """
+        new_list = LinkedList()
+
+        # Checking for empty list
+        if self.head is None:
+            return new_list
+
+        # Copying head
+        new_list.add_first(self.head.value)
+
+        # Copying remaining nodes
+        tail = new_list.head
+        node = self.head.next_
+        while node is not None:
+            tail.next_ = Node(node.value)
+            node = node.next_
+            tail = tail.next_
+
+        return new_list

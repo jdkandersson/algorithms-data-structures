@@ -25,3 +25,8 @@ To add an object relative to another object, the relative object has to be found
 ### Remove Object from List
 
 To delete an object based on a key, it has to be found first. Therefore, the commentary in Finding an Object applies. The deletion operation is O(1).
+
+
+### Clone the List
+
+Due to the nature of the data structure, if the linked list is cloned without further consideration it is likely that only the head node is actually cloned and all the linked nodes are shared between the object. This clone method has O(1) complexity. More likely the whole list is expected to be cloned, which requires cloning each node to a new list. This has O(n) complexity.

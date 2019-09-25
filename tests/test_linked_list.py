@@ -468,3 +468,69 @@ def test_delete_duplicate(duplicate_list):
     duplicate_list.delete(value)
 
     assert list(iter(duplicate_list)) == ["value 1"]
+
+
+def test_clone_empty(empty_list):
+    """
+    GIVEN empty list
+    WHEN clone is called
+    THEN a new empty list is returned.
+    """
+    new_list = empty_list.clone()
+
+    assert list(iter(new_list)) == list(iter(empty_list))
+    assert id(new_list) != id(empty_list)
+
+
+def test_clone_single(single_list):
+    """
+    GIVEN single list
+    WHEN clone is called
+    THEN a new single list is returned with all nodes copied.
+    """
+    new_list = single_list.clone()
+
+    assert list(iter(new_list)) == list(iter(single_list))
+    assert id(new_list) != id(single_list)
+    node = single_list.head
+    new_node = new_list.head
+    while node is not None:
+        assert id(node) != id(new_node)
+        node = node.next_
+        new_node = new_node.next_
+
+
+def test_clone_multiple(multiple_list):
+    """
+    GIVEN multiple list
+    WHEN clone is called
+    THEN a new multiple list is returned with all nodes copied.
+    """
+    new_list = multiple_list.clone()
+
+    assert list(iter(new_list)) == list(iter(multiple_list))
+    assert id(new_list) != id(multiple_list)
+    node = multiple_list.head
+    new_node = new_list.head
+    while node is not None:
+        assert id(node) != id(new_node)
+        node = node.next_
+        new_node = new_node.next_
+
+
+def test_clone_duplicate(duplicate_list):
+    """
+    GIVEN duplicate list
+    WHEN clone is called
+    THEN a new duplicate list is returned with all nodes copied.
+    """
+    new_list = duplicate_list.clone()
+
+    assert list(iter(new_list)) == list(iter(duplicate_list))
+    assert id(new_list) != id(duplicate_list)
+    node = duplicate_list.head
+    new_node = new_list.head
+    while node is not None:
+        assert id(node) != id(new_node)
+        node = node.next_
+        new_node = new_node.next_
