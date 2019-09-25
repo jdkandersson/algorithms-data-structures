@@ -2,7 +2,7 @@
 
 A linked list is a collection of objects that reference each other. One object might reference the next and/or the previous object. Depending on the use case, there might be multiple paths that can be taken. For example, a particular path might implement a certain order of objects (for example, if a node represents a name, one path might be the order in which the objects were inserted and another might be an alphabetical order).
 
-Compared to arrays, the amount of memory to be used does not have to be pre-defined. However, the amount of memory is larger as the reference to the next object in the chain has to be recorded. Arrays allow for O(1) access to elements at a particular index, which is not possible for linked lists by default.
+Compared to arrays, the amount of memory to be used does not have to be pre-defined. However, the amount of memory is larger as the reference to the next object in the chain has to be recorded. Arrays allow for O(1) access to elements at a particular index, which is not possible for linked lists by default. Both arrays and linked lists have O(n) memory complexity, however, arrays are more efficient at storing individual elements as linked lists have to store pointers to the next node with each element. It is also worth noting that, as a whole, depending on the use case, linked lists might use less memory as it is only allocated as required by adding new elements. In Python, arrays by default allocate spare capacity to allow for addition of new elements without having to copy the contents of the array.
 
 ## Operations
 
