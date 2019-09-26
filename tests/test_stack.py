@@ -32,3 +32,37 @@ def test_push_pop(values):
 
     with pytest.raises(stack.StackEmptyError):
         test_stack.pop()
+
+
+def test_peek_empty():
+    """
+    GIVEN empty stack
+    WHEN peek is called
+    THEN StackEmptyError is raised.
+    """
+    test_stack = stack.Stack()
+
+    with pytest.raises(stack.StackEmptyError):
+        test_stack.peek()
+
+
+@pytest.mark.parametrize(
+    "values, expected_value",
+    [
+        (("value 1",), "value 1"),
+        (("value 1", "value 2"), "value 2"),
+    ]
+)
+def test_peek_single(values, expected_value):
+    """
+    GIVEN values to push and expected value
+    WHEN values are pushed onto the stack and peek is called
+    THEN the expected value is returned.
+    """
+    test_stack = stack.Stack()
+    for value in values:
+        test_stack.push(value)
+
+    returned_value = test_stack.peek()
+
+    assert returned_value == expected_value

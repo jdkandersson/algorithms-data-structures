@@ -84,3 +84,15 @@ class Stack:
 
         """
         return self._list.remove_first()
+
+    def peek(self):
+        """
+        Return the value at the top of the stack without popping it.
+
+        Returns:
+            The top value.
+
+        """
+        value = self._list.remove_first()
+        self._list.add_first(value)
+        return value
