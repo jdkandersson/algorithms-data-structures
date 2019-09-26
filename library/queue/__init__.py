@@ -4,7 +4,7 @@
 class _Node:
     """Node for the linked list."""
 
-    def __init__(self, value, next_ = None):
+    def __init__(self, value, next_=None):
         """Construct."""
         self.value = value
         self.next_ = next_
@@ -68,7 +68,7 @@ class Queue:
     """Queue implemented using a linked list."""
 
     def __init__(self):
-        """"Construct."""
+        """Construct."""
         self._list = _LinkedList()
 
     def enqueue(self, value):

@@ -4,7 +4,7 @@
 class _Node:
     """Node for the linked list."""
 
-    def __init__(self, value, next_ = None):
+    def __init__(self, value, next_=None):
         """
         Construct.
 

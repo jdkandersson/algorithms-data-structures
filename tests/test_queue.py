@@ -1,4 +1,5 @@
 """Tests for queue."""
+# pylint: disable=redefined-outer-name
 
 import pytest
 
@@ -30,12 +31,7 @@ from library import queue
             ("deq", "value 3"),
         ],
     ],
-    ids=[
-        "enq-deq",
-        "enq-deq-enq-deq",
-        "enq-enq-deq-deq",
-        "enq-enq-enq-deq-deq-deq",
-    ]
+    ids=["enq-deq", "enq-deq-enq-deq", "enq-enq-deq-deq", "enq-enq-enq-deq-deq-deq"],
 )
 def test_enqueue_dequeue(actions):
     """
@@ -72,10 +68,7 @@ def test_peek_empty():
 
 @pytest.mark.parametrize(
     ("values", "expected_value"),
-    [
-        (("value 1",), "value 1"),
-        (("value 1", "value 2"), "value 1"),
-    ]
+    [(("value 1",), "value 1"), (("value 1", "value 2"), "value 1")],
 )
 def test_peek(values, expected_value):
     """
@@ -97,11 +90,7 @@ def test_peek(values, expected_value):
 
 @pytest.mark.parametrize(
     ("values", "expected_result"),
-    [
-        ((), True),
-        (("value 1",), False),
-        (("value 1", "value 2"), False),
-    ]
+    [((), True), (("value 1",), False), (("value 1", "value 2"), False)],
 )
 def test_is_empty(values, expected_result):
     """

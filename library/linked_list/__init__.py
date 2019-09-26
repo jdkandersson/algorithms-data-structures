@@ -6,7 +6,7 @@ import typing
 class Node:
     """Represents an node in the linked list."""
 
-    def __init__(self, value, next_ = None):
+    def __init__(self, value, next_=None):
         """
         Construct.
 
@@ -23,8 +23,7 @@ class LinkedList:
     """Singly linked list."""
 
     def __init__(self):
-        """
-        Construct."""
+        """Construct."""
         self.head = None
 
     def add_first(self, value):
@@ -84,7 +83,6 @@ class LinkedList:
 
         """
         self._insert_after(self.head, key, value)
-
 
     @classmethod
     def _insert_after(cls, node, key, value):

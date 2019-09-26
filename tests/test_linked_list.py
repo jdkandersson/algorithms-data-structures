@@ -1,7 +1,9 @@
 """Tests for linked list."""
+# pylint: disable=redefined-outer-name,unused-argument
+
+from unittest import mock
 
 import pytest
-from unittest import mock
 
 from library import linked_list
 
@@ -60,8 +62,8 @@ def test_node_construct_with_next():
     node = linked_list.Node(value, next_node)
 
     assert node.value == value
-    assert node.next_  is not linked_list.Node
-    assert node.next_ .value == "value 1"
+    assert node.next_ is not linked_list.Node
+    assert node.next_.value == "value 1"
 
 
 def test_construct():
@@ -88,7 +90,7 @@ def test_add_empty(empty_list):
     list_.add_first(value)
 
     assert list_.head.value == value
-    assert list_.head.next_ == None
+    assert list_.head.next_ is None
 
 
 def test_add_single(single_list):
@@ -100,7 +102,6 @@ def test_add_single(single_list):
     value = "value 2"
 
     single_list.add_first(value)
-
 
     assert single_list.head.value == value
     assert single_list.head.next_ is not None
@@ -134,7 +135,7 @@ def test_add_last_empty(empty_list):
     list_.add_last(value)
 
     assert list_.head.value == value
-    assert list_.head.next_ == None
+    assert list_.head.next_ is None
 
 
 def test_add_last_single(single_list):
@@ -292,7 +293,7 @@ def test_insert_after_empty(empty_list):
 @pytest.mark.parametrize(
     "key, expected_list",
     [("value 2", ["value 1"]), ("value 1", ["value 1", "value 2"])],
-    ids=["value not in list", "value in list"]
+    ids=["value not in list", "value in list"],
 )
 def test_insert_after_single(single_list, key, expected_list):
     """
@@ -314,7 +315,7 @@ def test_insert_after_single(single_list, key, expected_list):
         ("value 2", ["value 1", "value 2", "value 3"]),
         ("value 1", ["value 1", "value 3", "value 2"]),
     ],
-    ids=["value not in list", "value in list last", "value in list first"]
+    ids=["value not in list", "value in list last", "value in list first"],
 )
 def test_insert_after_multiple(multiple_list, key, expected_list):
     """
@@ -358,7 +359,7 @@ def test_insert_before_empty(empty_list):
 @pytest.mark.parametrize(
     "key, expected_list",
     [("value 2", ["value 1"]), ("value 1", ["value 2", "value 1"])],
-    ids=["value not in list", "value in list"]
+    ids=["value not in list", "value in list"],
 )
 def test_insert_before_single(single_list, key, expected_list):
     """
@@ -380,7 +381,7 @@ def test_insert_before_single(single_list, key, expected_list):
         ("value 2", ["value 1", "value 3", "value 2"]),
         ("value 1", ["value 3", "value 1", "value 2"]),
     ],
-    ids=["value not in list", "value in list last", "value in list first"]
+    ids=["value not in list", "value in list last", "value in list first"],
 )
 def test_insert_before_multiple(multiple_list, key, expected_list):
     """
@@ -424,7 +425,7 @@ def test_delete_empty(empty_list):
 @pytest.mark.parametrize(
     "key, expected_list",
     [("value 2", ["value 1"]), ("value 1", [])],
-    ids=["value not in list", "value in list"]
+    ids=["value not in list", "value in list"],
 )
 def test_delete_single(single_list, key, expected_list):
     """
@@ -444,7 +445,7 @@ def test_delete_single(single_list, key, expected_list):
         ("value 2", ["value 1"]),
         ("value 1", ["value 2"]),
     ],
-    ids=["value not in list", "value in list last", "value in list first"]
+    ids=["value not in list", "value in list last", "value in list first"],
 )
 def test_delete_multiple(multiple_list, key, expected_list):
     """

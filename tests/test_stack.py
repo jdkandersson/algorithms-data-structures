@@ -1,4 +1,5 @@
 """Tests for the stack."""
+# pylint: disable=redefined-outer-name
 
 import pytest
 
@@ -7,12 +8,8 @@ from library import stack
 
 @pytest.mark.parametrize(
     "values",
-    [
-        [],
-        ["value 1"],
-        ["value 1", "value 2"],
-    ],
-    ids=["empty", "single", "multiple"]
+    [[], ["value 1"], ["value 1", "value 2"]],
+    ids=["empty", "single", "multiple"],
 )
 def test_push_pop(values):
     """
@@ -48,10 +45,7 @@ def test_peek_empty():
 
 @pytest.mark.parametrize(
     "values, expected_value",
-    [
-        (["value 1",], "value 1"),
-        (["value 1", "value 2"], "value 2"),
-    ],
+    [(["value 1"], "value 1"), (["value 1", "value 2"], "value 2")],
     ids=["single", "multiple"],
 )
 def test_peek_single(values, expected_value):
@@ -75,11 +69,7 @@ def test_peek_single(values, expected_value):
 
 @pytest.mark.parametrize(
     "values, expected_result",
-    [
-        ([], True),
-        (["value 1"], False),
-        (["value 1", "value 2"], False),
-    ],
+    [([], True), (["value 1"], False), (["value 1", "value 2"], False)],
     ids=["empty", "single", "multiple"],
 )
 def test_is_empty_single(values, expected_result):
