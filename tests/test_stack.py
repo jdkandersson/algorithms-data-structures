@@ -51,7 +51,8 @@ def test_peek_empty():
     [
         (("value 1",), "value 1"),
         (("value 1", "value 2"), "value 2"),
-    ]
+    ],
+    ids=["single", "multiple"],
 )
 def test_peek_single(values, expected_value):
     """
@@ -66,3 +67,27 @@ def test_peek_single(values, expected_value):
     returned_value = test_stack.peek()
 
     assert returned_value == expected_value
+
+
+@pytest.mark.parametrize(
+    "values, expected_result",
+    [
+        ((), True),
+        (("value 1",), False),
+        (("value 1", "value 2"), False),
+    ],
+    ids=["empty", "single", "multiple"],
+)
+def test_is_empty_single(values, expected_result):
+    """
+    GIVEN values to push and expected empty test result
+    WHEN values are pushed onto the stack and is_empty is called
+    THEN the expected test result is returned.
+    """
+    test_stack = stack.Stack()
+    for value in values:
+        test_stack.push(value)
+
+    result = test_stack.is_empty()
+
+    assert result == expected_result

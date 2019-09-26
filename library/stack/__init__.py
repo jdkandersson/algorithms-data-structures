@@ -48,12 +48,16 @@ class _LinkedList:
             The value of the first node.
 
         """
-        if self.head is None:
-            raise StackEmptyError
+        self.raise_empty()
 
         node = self.head
         self.head = self.head.next_
         return node.value
+
+    def raise_empty(self):
+        """Raise StackEmptyError if the stack is empty."""
+        if self.head is None:
+            raise StackEmptyError
 
 
 class Stack:
@@ -93,6 +97,15 @@ class Stack:
             The top value.
 
         """
-        value = self._list.remove_first()
-        self._list.add_first(value)
-        return value
+        self._list.raise_empty()
+        return self._list.head.value
+
+    def is_empty(self):
+        """
+        Check whether the stack is empty.
+
+        Returns:
+            Whether the stack is empty.
+
+        """
+        return self._list.head is None
