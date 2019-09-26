@@ -58,6 +58,18 @@ def test_enqueue_dequeue(actions):
         test_queue.dequeue()
 
 
+def test_peek_empty():
+    """
+    GIVEN empty queue
+    WHEN peek is called
+    THEN queueEmptyError is raised.
+    """
+    test_queue = queue.Queue()
+
+    with pytest.raises(queue.QueueEmptyError):
+        test_queue.peek()
+
+
 @pytest.mark.parametrize(
     ("values", "expected_value"),
     [

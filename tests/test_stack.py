@@ -58,7 +58,8 @@ def test_peek_single(values, expected_value):
     """
     GIVEN values to push and expected value
     WHEN values are pushed onto the stack and peek is called
-    THEN the expected value is returned.
+    THEN the expected value is returned and all values can still be popped from the
+        stack.
     """
     test_stack = stack.Stack()
     for value in values:
@@ -67,6 +68,9 @@ def test_peek_single(values, expected_value):
     returned_value = test_stack.peek()
 
     assert returned_value == expected_value
+
+    for value in reversed(values):
+        assert test_stack.pop() == value
 
 
 @pytest.mark.parametrize(
