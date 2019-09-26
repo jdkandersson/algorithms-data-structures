@@ -105,3 +105,23 @@ def test_is_empty(values, expected_result):
     result = test_queue.is_empty()
 
     assert result == expected_result
+
+
+@pytest.mark.parametrize(
+    "values",
+    [[], ["value 1"], ["value 1", "value 2"]],
+    ids=["empty", "single", "multiple"],
+)
+def test_clear(values):
+    """
+    GIVEN values to enqueue
+    WHEN values are enqueued and clear is called
+    THEN the queue is empty.
+    """
+    test_queue = queue.Queue()
+    for value in values:
+        test_queue.enqueue(value)
+
+    test_queue.clear()
+
+    assert test_queue.is_empty() is True

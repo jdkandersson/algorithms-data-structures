@@ -58,6 +58,11 @@ class _LinkedList:
             self.tail = self.head
         return value
 
+    def clear(self):
+        """Remove all values from the list."""
+        self.head = None
+        self.tail = None
+
     def raise_empty(self):
         """Raise QueueEmptyError when the queue is empty."""
         if self.head is None:
@@ -111,3 +116,7 @@ class Queue:
 
         """
         return self._list.head is None
+
+    def clear(self):
+        """Remove all elements from the queue."""
+        self._list.clear()
