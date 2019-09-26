@@ -93,6 +93,8 @@ class Stack:
         """
         Return the value at the top of the stack without popping it.
 
+        Raises StackEmptyError if the stack is empty.
+
         Returns:
             The top value.
 

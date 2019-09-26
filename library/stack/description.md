@@ -11,3 +11,11 @@ Adds a new element to the stack. This has O(1) time and memory complexity.
 ### Pop
 
 Remove the last added element from the stack and return it. This has O(1) time and memory complexity.
+
+### Peek
+
+Return the element at the top of the stack without popping it from the stack. This has O(1) time and memory complexity. This cn be implemented using the pop and push command. However, this may make changes to where the element is stored and, therefore, the data structure which might be unexpected for an operation that is expected to be read only.
+
+### Is Empty
+
+Return whether the stack is empty. This has o(1) time and memory complexity.

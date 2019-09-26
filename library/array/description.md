@@ -27,3 +27,7 @@ Copying an array can be done a number of ways. Re-assigning an array to a new va
 ## Multi-Dimensional Arrays
 
 Multi-dimensional arrays are possible in Python as arrays in Python can contain anything, including another list. It is easy to get lost in multi-dimensional lists, however, unless done carefully as there is no easy way to control the size of the sub lists so that they are all equal. There are libraries available to help with multi-dimensional arrays.
+
+## Applications
+
+Arrays are frequently used in programming to store and operate on multiple similar elements such as to sort them.
