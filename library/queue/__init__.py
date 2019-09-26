@@ -101,3 +101,13 @@ class Queue:
         """
         self._list.raise_empty()
         return self._list.head.value
+
+    def is_empty(self):
+        """
+        Check whether the queue is empty.
+
+        Returns:
+            Whether the queue is empty.
+
+        """
+        return self._list.head is None

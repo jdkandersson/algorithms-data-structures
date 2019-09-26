@@ -93,3 +93,26 @@ def test_peek(values, expected_value):
 
     for value in values:
         assert test_queue.dequeue() == value
+
+
+@pytest.mark.parametrize(
+    ("values", "expected_result"),
+    [
+        ((), True),
+        (("value 1",), False),
+        (("value 1", "value 2"), False),
+    ]
+)
+def test_is_empty(values, expected_result):
+    """
+    GIVEN values to enqueue
+    WHEN they are enqueued and is_empty is called
+    THEN the expected result is returned.
+    """
+    test_queue = queue.Queue()
+    for value in values:
+        test_queue.enqueue(value)
+
+    result = test_queue.is_empty()
+
+    assert result == expected_result
