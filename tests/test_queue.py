@@ -7,40 +7,74 @@ from library import queue
 
 
 @pytest.mark.parametrize(
-    "actions",
+    "length, operations, exception",
     [
-        [("enq", "value 1"), ("deq", "value 1")],
-        [
-            ("enq", "value 1"),
-            ("deq", "value 1"),
-            ("enq", "value 1"),
-            ("deq", "value 1"),
-        ],
-        [
-            ("enq", "value 1"),
-            ("enq", "value 2"),
-            ("deq", "value 1"),
-            ("deq", "value 2"),
-        ],
-        [
-            ("enq", "value 1"),
-            ("enq", "value 2"),
-            ("enq", "value 3"),
-            ("deq", "value 1"),
-            ("deq", "value 2"),
-            ("deq", "value 3"),
-        ],
+        (0, ["deq"], queue.QueueEmptyError),
+        (0, ["enq"], queue.QueueFullError),
+        (1, ["enq", "enq"], queue.QueueFullError),
+        (1, ["enq", "deq", "deq"], queue.QueueEmptyError),
     ],
-    ids=["enq-deq", "enq-deq-enq-deq", "enq-enq-deq-deq", "enq-enq-enq-deq-deq-deq"],
+    ids=["0,deq", "0,enq", "1,enq-enq", "1,enq-deq-deq"],
 )
-def test_enqueue_dequeue(actions):
+def test_end_deq_raise(length, operations, exception):
+    """
+    GIVEN length of queue, operations to perform and exception that should be raised
+    WHEN queue with the length is constructed and the operations are performed
+    THEN the exception is raised
+    """
+    test_queue = queue.Queue(length)
+
+    def perform_operation(operation):
+        if operation == "enq":
+            test_queue.enqueue("value")
+        elif operation == "deq":
+            test_queue.dequeue()
+        else:
+            raise Exception
+
+    for idx, operation in enumerate(operations):
+        if idx == len(operations) - 1:
+            with pytest.raises(exception):
+                perform_operation(operation)
+            continue
+        perform_operation(operation)
+
+
+@pytest.mark.parametrize(
+    "length, actions",
+    [
+        (1, [("enq", "value 1"), ("deq", "value 1")]),
+        (
+            1,
+            [
+                ("enq", "value 1"),
+                ("deq", "value 1"),
+                ("enq", "value 1"),
+                ("deq", "value 1"),
+            ],
+        ),
+        (
+            2,
+            [
+                ("enq", "value 1"),
+                ("enq", "value 2"),
+                ("deq", "value 1"),
+                ("enq", "value 3"),
+                ("deq", "value 2"),
+                ("deq", "value 3"),
+            ],
+        ),
+    ],
+    ids=["1,enq-deq", "1,enq-deq-enq-deq", "2,enq-enq-deq-enq-deq-deq"],
+)
+def test_enqueue_dequeue(length, actions):
     """
     GIVEN list of enqueue (with value to enqueue) and dequeue (with value expected to
-        be dequeued) actions
+        be dequeued) actions and the length of a queue
     WHEN actions are performed
-    THE expected values are dequeued and QueueEmptyError is raised on final dequeue.
+    THE expected values are dequeued.
     """
-    test_queue = queue.Queue()
+    test_queue = queue.Queue(length)
 
     for action in actions:
         operation, value = action
@@ -50,78 +84,87 @@ def test_enqueue_dequeue(actions):
         elif operation == "deq":
             assert test_queue.dequeue() == value
 
-    with pytest.raises(queue.QueueEmptyError):
-        test_queue.dequeue()
 
-
-def test_peek_empty():
+def test_get_front_empty():
     """
     GIVEN empty queue
-    WHEN peek is called
+    WHEN get_front is called
     THEN queueEmptyError is raised.
     """
     test_queue = queue.Queue()
 
     with pytest.raises(queue.QueueEmptyError):
-        test_queue.peek()
+        test_queue.get_front()
 
 
-@pytest.mark.parametrize(
-    ("values", "expected_value"),
-    [(("value 1",), "value 1"), (("value 1", "value 2"), "value 1")],
-)
-def test_peek(values, expected_value):
+def test_get_front_single():
     """
-    GIVEN values to enqueue
-    WHEN they are enqueued and peek is called
-    THEN the expected value is returned and all values can still be dequeued.
+    GIVEN queue with a single value
+    WHEN get_front is called
+    THEN the value is returned and can still be dequeued.
     """
     test_queue = queue.Queue()
-    for value in values:
-        test_queue.enqueue(value)
+    value = "value 1"
+    test_queue.enqueue(value)
 
-    value = test_queue.peek()
+    returned_value = test_queue.get_front()
 
-    assert value == expected_value
-
-    for value in values:
-        assert test_queue.dequeue() == value
+    assert returned_value == value
+    assert test_queue.dequeue() == value
 
 
-@pytest.mark.parametrize(
-    ("values", "expected_result"),
-    [((), True), (("value 1",), False), (("value 1", "value 2"), False)],
-)
-def test_is_empty(values, expected_result):
+def test_get_front_multiple():
     """
-    GIVEN values to enqueue
-    WHEN they are enqueued and is_empty is called
-    THEN the expected result is returned.
+    GIVEN queue with a multiple values
+    WHEN get_front is called
+    THEN the front value is returned.
     """
     test_queue = queue.Queue()
-    for value in values:
-        test_queue.enqueue(value)
+    test_queue.enqueue("value 1")
+    test_queue.enqueue("value 2")
+
+    returned_value = test_queue.get_front()
+
+    assert returned_value == "value 1"
+
+
+def test_is_empty_empty():
+    """
+    GIVEN empty queue
+    WHEN is_empty is called
+    THEN True is returned.
+    """
+    test_queue = queue.Queue()
 
     result = test_queue.is_empty()
 
-    assert result == expected_result
+    assert result is True
 
 
-@pytest.mark.parametrize(
-    "values",
-    [[], ["value 1"], ["value 1", "value 2"]],
-    ids=["empty", "single", "multiple"],
-)
-def test_clear(values):
+def test_is_empty_not_empty():
     """
-    GIVEN values to enqueue
-    WHEN values are enqueued and clear is called
-    THEN the queue is empty.
+    GIVEN queue that is not empty
+    WHEN is_empty is called
+    THEN False is returned.
     """
     test_queue = queue.Queue()
-    for value in values:
-        test_queue.enqueue(value)
+    test_queue.enqueue("value 1")
+
+    result = test_queue.is_empty()
+
+    assert result is False
+
+
+def test_clear():
+    """
+    GIVEN queue with length 1 with an item
+    WHEN clear is called
+    THEN the queue is empty and can be filled up again.
+    """
+    test_queue = queue.Queue(1)
+    test_queue.enqueue("value 1")
 
     test_queue.clear()
 
     assert test_queue.is_empty() is True
+    test_queue.enqueue("value 2")
