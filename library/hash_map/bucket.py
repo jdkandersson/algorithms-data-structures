@@ -1,11 +1,14 @@
 """Bucket implemented using linked list."""
 
+from library import linked_list
+
 
 class Bucket:
     """Class for buckets."""
 
     def __init__(self):
         """Construct."""
+        self._list = linked_list.LinkedList()
 
     def insert(self, key, value):
         """
@@ -16,6 +19,7 @@ class Bucket:
             value: The data to store.
 
         """
+        self._list.add_first((key, value))
 
     def get(self, key):
         """
