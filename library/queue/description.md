@@ -8,23 +8,23 @@ An even ore efficient data structure is making special use of an array. A front 
 
 ### Enqueue
 
-Add an element to the back of the queue. This has O(1) time and memory complexity.
+Add an element to the back of the queue. This has O(1) time complexity.
 
 ### Dequeue
 
-Remove an element from the front of the queue. This has O(1) time and memory complexity.
+Remove an element from the front of the queue. This has O(1) time complexity.
 
 ### Get Front
 
-Return the element from the front of the queue without dequeueing it. This has O(1) time and memory complexity.
+Return the element from the front of the queue without dequeueing it. This has O(1) time complexity.
 
 ### Is Empty
 
-Check whether the queue is empty. This has O(1) time and memory complexity.
+Check whether the queue is empty. This has O(1) time complexity.
 
 ### Is Clear
 
-Reset the queue to be empty. This has O(1) time and memory complexity.
+Reset the queue to be empty. This has O(1) time complexity.
 
 ## Observations
 
