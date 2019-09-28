@@ -34,6 +34,11 @@ class Bucket:
             The value for the key.
 
         """
+        for element in self._list:
+            element_key, element_value = element
+            if element_key == key:
+                return element_value
+        raise KeyError
 
     def exists(self, key):
         """
