@@ -180,3 +180,14 @@ def test_iter(multiple_bucket):  # pylint: disable=redefined-outer-name
     THEN the elements in the bucket are returned.
     """
     assert list(iter(multiple_bucket)) == [("key 2", "value 2"), ("key 1", "value 1")]
+
+
+def test_clear(single_bucket):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN single element bucket
+    WHEN clear is called
+    THEN bucket is empty.
+    """
+    single_bucket.clear()
+
+    assert single_bucket.is_empty() is True

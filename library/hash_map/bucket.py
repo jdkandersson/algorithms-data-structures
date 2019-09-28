@@ -76,6 +76,7 @@ class Bucket:
 
     def clear(self):
         """Remove all elements from the bucket."""
+        self._list.clear()
 
     def is_empty(self):
         """
