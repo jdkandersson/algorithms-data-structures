@@ -93,3 +93,37 @@ def test_get_multiple():
     for idx in range(2):
         element_number = idx + 1
         assert test_bucket.get(f"key {element_number}") == f"value {element_number}"
+
+
+@pytest.mark.parametrize(
+    "keys, key, expected_result",
+    [
+        ([], "key 1", False),
+        (["key 1"], "key 2", False),
+        (["key 1"], "key 1", True),
+        (["key 1", "key 2"], "key 3", False),
+        (["key 1", "key 2"], "key 2", True),
+        (["key 1", "key 2"], "key 1", True),
+    ],
+    ids=[
+        "empty",
+        "single-miss",
+        "single-hit",
+        "multiple-miss",
+        "multiple-first-hit",
+        "multiple-second-hit",
+    ],
+)
+def test_exists(keys, key, expected_result):
+    """
+    GIVEN keys to add, key to check for and expected exists result
+    WHEN keys are added to the bucket and exists is called with the key
+    THEN the expected result is returned.
+    """
+    test_bucket = bucket.Bucket()
+    for insert_key in keys:
+        test_bucket.insert(insert_key, "value")
+
+    result = test_bucket.exists(key)
+
+    assert result == expected_result

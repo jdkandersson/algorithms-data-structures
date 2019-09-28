@@ -51,6 +51,11 @@ class Bucket:
             Whether the key is in the bucket.
 
         """
+        for element in self._list:
+            element_key, _ = element
+            if element_key == key:
+                return True
+        return False
 
     def remove(self, key):
         """
