@@ -1,8 +1,6 @@
 """Tests for the hash map bucket."""
 # pylint: disable=protected-access
 
-from unittest import mock
-
 import pytest
 
 from library.hash_map import bucket
@@ -28,34 +26,21 @@ def multiple_bucket(single_bucket):  # pylint: disable=redefined-outer-name
     return single_bucket
 
 
-def test_insert_integration():
+def test_insert(empty_bucket):  # pylint: disable=redefined-outer-name
     """
-    GIVEN _list of bucket returns False for is_empty
+    GIVEN empty bucket and multiple key value elements to insert
     WHEN insert is called
-    THEN then the is_empty function returns True.
+    THEN all elements are returned as tuples in reverse order.
     """
-    test_bucket = bucket.Bucket()
-    assert test_bucket._list.is_empty() is True
+    for idx in range(2):
+        element_number = idx + 1
+        empty_bucket.insert(f"key {element_number}", f"value {element_number}")
 
-    test_bucket.insert("key 1", "value 1")
-
-    assert test_bucket._list.is_empty() is False
-
-
-def test_insert_call():
-    """
-    GIVEN key and value and mocked bucket list
-    WHEN insert is called with the key and value
-    THEN the bucket list is called with the key and value as a tuple.
-    """
-    key = "key 1"
-    value = "value 1"
-    test_bucket = bucket.Bucket()
-    test_bucket._list = mock.MagicMock()
-
-    test_bucket.insert(key, value)
-
-    test_bucket._list.add_first.assert_called_once_with((key, value))
+    elements = list(iter(empty_bucket))
+    for idx, (key, value) in enumerate(reversed(elements)):
+        element_number = idx + 1
+        assert key == f"key {element_number}"
+        assert value == f"value {element_number}"
 
 
 def test_get_empty(empty_bucket):  # pylint: disable=redefined-outer-name
