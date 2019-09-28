@@ -255,3 +255,17 @@ class LinkedList:
             tail = tail.next_
 
         return new_list
+
+    def is_empty(self):
+        """
+        Check whether the list is empty.
+
+        Returns:
+            Whether the list is empty.
+
+        """
+        return self.head is None
+
+    def clear(self):
+        """Remove all elements frm the list."""
+        self.head = None

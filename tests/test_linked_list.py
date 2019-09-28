@@ -535,3 +535,63 @@ def test_clone_duplicate(duplicate_list):
         assert id(node) != id(new_node)
         node = node.next_
         new_node = new_node.next_
+
+
+def test_is_empty_empty(empty_list):
+    """
+    GIVEN empty list
+    WHEN is_empty is called
+    THEN True is returned.
+    """
+    assert empty_list.is_empty() is True
+
+
+def test_is_empty_single(single_list):
+    """
+    GIVEN single item list
+    WHEN is_empty is called
+    THEN False is returned.
+    """
+    assert single_list.is_empty() is False
+
+
+def test_is_empty_multiple(multiple_list):
+    """
+    GIVEN multiple item list
+    WHEN is_empty is called
+    THEN False is returned.
+    """
+    assert multiple_list.is_empty() is False
+
+
+def test_clear_empty(empty_list):
+    """
+    GIVEN empty list
+    WHEN clear is called
+    THEN list is empty.
+    """
+    empty_list.clear()
+
+    assert empty_list.is_empty() is True
+
+
+def test_clear_single(single_list):
+    """
+    GIVEN single item list
+    WHEN clear is called
+    THEN list is empty.
+    """
+    single_list.clear()
+
+    assert single_list.is_empty() is True
+
+
+def test_clear_multiple(multiple_list):
+    """
+    GIVEN multiple item list
+    WHEN clear is called
+    THEN list is empty.
+    """
+    multiple_list.clear()
+
+    assert multiple_list.is_empty() is True
