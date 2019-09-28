@@ -57,16 +57,18 @@ class Bucket:
                 return True
         return False
 
-    def remove(self, key):
+    def delete(self, key):
         """
-        Remove the key from the bucket.
+        Delete the key from the bucket.
 
         Raises KeyError if the key doesn't exist.
 
         Args:
-            key: The key to remove.
+            key: The key to delete.
 
         """
+        value = self.get(key)
+        self._list.delete((key, value))
 
     def __iter__(self):
         """Iterate over each element in the bucket."""
@@ -82,3 +84,4 @@ class Bucket:
             Whether the bucket is empty.
 
         """
+        return self._list.is_empty()

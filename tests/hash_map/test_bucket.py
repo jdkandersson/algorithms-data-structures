@@ -8,6 +8,26 @@ import pytest
 from library.hash_map import bucket
 
 
+@pytest.fixture
+def empty_bucket():
+    """Return empty bucket."""
+    return bucket.Bucket()
+
+
+@pytest.fixture
+def single_bucket(empty_bucket):  # pylint: disable=redefined-outer-name
+    """Return single element bucket."""
+    empty_bucket.insert("key 1", "value 1")
+    return empty_bucket
+
+
+@pytest.fixture
+def multiple_bucket(single_bucket):  # pylint: disable=redefined-outer-name
+    """Return multiple element bucket."""
+    single_bucket.insert("key 2", "value 2")
+    return single_bucket
+
+
 def test_insert_integration():
     """
     GIVEN _list of bucket returns False for is_empty
@@ -38,61 +58,46 @@ def test_insert_call():
     test_bucket._list.add_first.assert_called_once_with((key, value))
 
 
-def test_get_empty():
+def test_get_empty(empty_bucket):  # pylint: disable=redefined-outer-name
     """
     GIVEN empty bucket
     WHEN get is called
     THEN KeyError is raised.
     """
-    test_bucket = bucket.Bucket()
-
     with pytest.raises(KeyError):
-        test_bucket.get("key 1")
+        empty_bucket.get("key 1")
 
 
-def test_get_single():
+def test_get_single(single_bucket):  # pylint: disable=redefined-outer-name
     """
     GIVEN bucket with single element
     WHEN get is called with the key of the element
     THEN the value of the element is returned.
     """
-    test_bucket = bucket.Bucket()
-    key = "key 1"
-    value = "value 1"
-    test_bucket.insert(key, value)
+    returned_value = single_bucket.get("key 1")
 
-    returned_value = test_bucket.get(key)
-
-    assert returned_value == value
+    assert returned_value == "value 1"
 
 
-def test_get_single_different():
+def test_get_single_different(single_bucket):  # pylint: disable=redefined-outer-name
     """
     GIVEN bucket with single element and a different key
     WHEN get is called with the key
     THEN KeyError is raised.
     """
-    test_bucket = bucket.Bucket()
-    test_bucket.insert("key 1", "value 1")
-
     with pytest.raises(KeyError):
-        test_bucket.get("key 2")
+        single_bucket.get("key 2")
 
 
-def test_get_multiple():
+def test_get_multiple(multiple_bucket):  # pylint: disable=redefined-outer-name
     """
     GIVEN bucket with multiple elements
     WHEN get is called with the key for each element
     THEN the value of the element is returned.
     """
-    test_bucket = bucket.Bucket()
     for idx in range(2):
         element_number = idx + 1
-        test_bucket.insert(f"key {element_number}", f"value {element_number}")
-
-    for idx in range(2):
-        element_number = idx + 1
-        assert test_bucket.get(f"key {element_number}") == f"value {element_number}"
+        assert multiple_bucket.get(f"key {element_number}") == f"value {element_number}"
 
 
 @pytest.mark.parametrize(
@@ -127,3 +132,42 @@ def test_exists(keys, key, expected_result):
     result = test_bucket.exists(key)
 
     assert result == expected_result
+
+
+def test_is_empty_empty(empty_bucket):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN empty bucket
+    WHEN is_empty is called
+    THEN True is returned.
+    """
+    assert empty_bucket.is_empty() is True
+
+
+def test_is_empty_single(single_bucket):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN single element bucket
+    WHEN is_empty is called
+    THEN False is returned.
+    """
+    assert single_bucket.is_empty() is False
+
+
+def test_delete_empty(empty_bucket):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN empty bucket
+    WHEN delete is called
+    THEN KeyError is raised.
+    """
+    with pytest.raises(KeyError):
+        empty_bucket.delete("key 1")
+
+
+def test_delete_single(single_bucket):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN single element bucket
+    WHEN delete is called with the key of the element
+    THEN the bucket is empty.
+    """
+    single_bucket.delete("key 1")
+
+    assert single_bucket.is_empty() is True
