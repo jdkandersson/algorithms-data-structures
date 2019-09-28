@@ -72,6 +72,7 @@ class Bucket:
 
     def __iter__(self):
         """Iterate over each element in the bucket."""
+        return self._list.__iter__()
 
     def clear(self):
         """Remove all elements from the bucket."""

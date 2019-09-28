@@ -171,3 +171,12 @@ def test_delete_single(single_bucket):  # pylint: disable=redefined-outer-name
     single_bucket.delete("key 1")
 
     assert single_bucket.is_empty() is True
+
+
+def test_iter(multiple_bucket):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN multiple element bucket
+    WHEN bucket is iterated and converted to a list
+    THEN the elements in the bucket are returned.
+    """
+    assert list(iter(multiple_bucket)) == [("key 2", "value 2"), ("key 1", "value 1")]
