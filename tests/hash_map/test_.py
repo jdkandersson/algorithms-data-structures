@@ -193,3 +193,80 @@ def test_set_get():
     return_value = test_hash_map.get(key)
 
     assert return_value == value
+
+
+def test_exists_calculate_index(
+    mocked_buckets_hash_map,
+):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN hash map with mocked _calculate_index and key
+    WHEN exists is called with the key
+    THEN _calculate_index is called with the key.
+    """
+    mocked_buckets_hash_map._calculate_index.return_value = 0
+    key = "key 1"
+
+    mocked_buckets_hash_map.exists(key)
+
+    mocked_buckets_hash_map._calculate_index.assert_called_once_with(key)
+
+
+def test_exists_exists_call(
+    mocked_buckets_hash_map,
+):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN hash map with mocked _calculate_index, mocked buckets and key
+    WHEN exists is called with the key
+    THEN the bucket with the index returned by _calculate_index is called with the key.
+    """
+    mocked_buckets_hash_map._calculate_index.return_value = 0
+    key = "key 1"
+
+    mocked_buckets_hash_map.exists(key)
+
+    mocked_buckets_hash_map._buckets[0].exists.assert_called_once_with(key)
+
+
+def test_exists_exists_return(
+    mocked_buckets_hash_map,
+):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN hash map with mocked _calculate_index and mocked buckets
+    WHEN exists is called with the key
+    THEN the exists return value of the bucket with the index returned by
+        _calculate_index is returned.
+    """
+    mocked_buckets_hash_map._calculate_index.return_value = 0
+    key = "key 1"
+
+    return_value = mocked_buckets_hash_map.exists(key)
+
+    assert return_value == mocked_buckets_hash_map._buckets[0].exists.return_value
+
+
+def test_exists_missing():
+    """
+    GIVEN empty hash map
+    WHEN exists is called with a key
+    THEN False is returned.
+    """
+    test_hash_map = hash_map.HashMap()
+
+    exists = test_hash_map.exists("key 1")
+
+    assert exists is False
+
+
+def test_exists_present():
+    """
+    GIVEN empty hash map and key and value
+    WHEN set is called with the key and value and exists is called with the key
+    THEN True is returned.
+    """
+    test_hash_map = hash_map.HashMap()
+    key = "key 1"
+
+    test_hash_map.set_(key, "value 1")
+    exists = test_hash_map.exists(key)
+
+    assert exists is True

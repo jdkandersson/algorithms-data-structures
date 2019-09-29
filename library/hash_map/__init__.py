@@ -61,3 +61,17 @@ class HashMap:
         """
         index = self._calculate_index(key)
         return self._buckets[index].get(key)
+
+    def exists(self, key):
+        """
+        Check whether the key exists.
+
+        Args:
+            key: The key to check for.
+
+        Returns:
+            Whether the key exists.
+
+        """
+        index = self._calculate_index(key)
+        return self._buckets[index].exists(key)
