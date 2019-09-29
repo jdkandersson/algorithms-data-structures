@@ -1,6 +1,8 @@
 """Tests for HashMap."""
 # pylint: disable=protected-access
 
+from unittest import mock
+
 import pytest
 
 from library import hash_map
@@ -73,3 +75,46 @@ def test_calculate_index(key, capacity, expected_index):
     index = test_hash_map._calculate_index(key)
 
     assert index == expected_index
+
+
+@pytest.fixture
+def mocked_buckets_hash_map():
+    """HashMap with mocked buckets and _calculate_index."""
+    capacity = 16
+    test_hash_map = hash_map.HashMap(capacity)
+    for idx in range(capacity):
+        test_hash_map._buckets[idx] = mock.MagicMock()
+    test_hash_map._calculate_index = mock.MagicMock()
+    return test_hash_map
+
+
+def test_set_calculate_index(
+    mocked_buckets_hash_map,
+):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN hash map with mocked _calculate_index and key
+    WHEN set_ is called with the key
+    THEN _calculate_index is called with the key.
+    """
+    mocked_buckets_hash_map._calculate_index.return_value = 0
+    key = "key 1"
+
+    mocked_buckets_hash_map.set_(key, "value 1")
+
+    mocked_buckets_hash_map._calculate_index.assert_called_once_with(key)
+
+
+def test_set_insert(mocked_buckets_hash_map):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN hash map with mocked _calculate_index, mocked buckets and key and value
+    WHEN set_ is called with the key and value
+    THEN the bucket with the index returned by _calculate_index is called with the key
+        and value.
+    """
+    mocked_buckets_hash_map._calculate_index.return_value = 0
+    key = "key 1"
+    value = "value 1"
+
+    mocked_buckets_hash_map.set_(key, value)
+
+    mocked_buckets_hash_map._buckets[0].insert.assert_called_once_with(key, value)
