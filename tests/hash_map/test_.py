@@ -165,3 +165,31 @@ def test_get_get_return(
     return_value = mocked_buckets_hash_map.get(key)
 
     assert return_value == mocked_buckets_hash_map._buckets[0].get.return_value
+
+
+def test_set_get_missing():
+    """
+    GIVEN empty hash map
+    WHEN get is called with a key
+    THEN KeyError is raised.
+    """
+    test_hash_map = hash_map.HashMap()
+
+    with pytest.raises(KeyError):
+        test_hash_map.get("key 1")
+
+
+def test_set_get():
+    """
+    GIVEN empty hash map and key and value
+    WHEN set is called with the key and value and get is called with the key
+    THEN the value is returned.
+    """
+    test_hash_map = hash_map.HashMap()
+    key = "key 1"
+    value = "value 1"
+
+    test_hash_map.set_(key, value)
+    return_value = test_hash_map.get(key)
+
+    assert return_value == value
