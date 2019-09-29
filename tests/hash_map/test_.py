@@ -118,3 +118,50 @@ def test_set_insert(mocked_buckets_hash_map):  # pylint: disable=redefined-outer
     mocked_buckets_hash_map.set_(key, value)
 
     mocked_buckets_hash_map._buckets[0].insert.assert_called_once_with(key, value)
+
+
+def test_get_calculate_index(
+    mocked_buckets_hash_map,
+):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN hash map with mocked _calculate_index and key
+    WHEN get is called with the key
+    THEN _calculate_index is called with the key.
+    """
+    mocked_buckets_hash_map._calculate_index.return_value = 0
+    key = "key 1"
+
+    mocked_buckets_hash_map.get(key)
+
+    mocked_buckets_hash_map._calculate_index.assert_called_once_with(key)
+
+
+def test_get_get_call(mocked_buckets_hash_map):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN hash map with mocked _calculate_index, mocked buckets and key
+    WHEN get is called with the key
+    THEN the bucket with the index returned by _calculate_index is called with the key.
+    """
+    mocked_buckets_hash_map._calculate_index.return_value = 0
+    key = "key 1"
+
+    mocked_buckets_hash_map.get(key)
+
+    mocked_buckets_hash_map._buckets[0].get.assert_called_once_with(key)
+
+
+def test_get_get_return(
+    mocked_buckets_hash_map,
+):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN hash map with mocked _calculate_index and mocked buckets
+    WHEN get is called with the key
+    THEN the get return value of the bucket with the index returned by
+        _calculate_index is returned.
+    """
+    mocked_buckets_hash_map._calculate_index.return_value = 0
+    key = "key 1"
+
+    return_value = mocked_buckets_hash_map.get(key)
+
+    assert return_value == mocked_buckets_hash_map._buckets[0].get.return_value

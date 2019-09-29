@@ -45,3 +45,19 @@ class HashMap:
         """
         index = self._calculate_index(key)
         self._buckets[index].insert(key, value)
+
+    def get(self, key):
+        """
+        Get the value for the key.
+
+        Raises KeyError if the key does not exist.
+
+        Args:
+            key: The key identifying the value.
+
+        Returns:
+            The value associated with the key.
+
+        """
+        index = self._calculate_index(key)
+        return self._buckets[index].get(key)
