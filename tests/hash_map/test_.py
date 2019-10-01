@@ -270,3 +270,62 @@ def test_exists_present():
     exists = test_hash_map.exists(key)
 
     assert exists is True
+
+
+def test_delete_calculate_index(
+    mocked_buckets_hash_map,
+):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN hash map with mocked _calculate_index and key
+    WHEN delete is called with the key
+    THEN _calculate_index is called with the key.
+    """
+    mocked_buckets_hash_map._calculate_index.return_value = 0
+    key = "key 1"
+
+    mocked_buckets_hash_map.delete(key)
+
+    mocked_buckets_hash_map._calculate_index.assert_called_once_with(key)
+
+
+def test_delete_delete_call(
+    mocked_buckets_hash_map,
+):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN hash map with mocked _calculate_index, mocked buckets and key
+    WHEN delete is called with the key
+    THEN the bucket with the index returned by _calculate_index is called with the key.
+    """
+    mocked_buckets_hash_map._calculate_index.return_value = 0
+    key = "key 1"
+
+    mocked_buckets_hash_map.delete(key)
+
+    mocked_buckets_hash_map._buckets[0].delete.assert_called_once_with(key)
+
+
+def test_delete_missing():
+    """
+    GIVEN empty hash map
+    WHEN delete is called with a key
+    THEN KeyError is raised.
+    """
+    test_hash_map = hash_map.HashMap()
+
+    with pytest.raises(KeyError):
+        test_hash_map.delete("key 1")
+
+
+def test_delete_present():
+    """
+    GIVEN empty hash map and key and value
+    WHEN set is called with the key and value and delete is called with the key
+    THEN the key no longer exists in the hash map.
+    """
+    test_hash_map = hash_map.HashMap()
+    key = "key 1"
+
+    test_hash_map.set_(key, "value 1")
+    test_hash_map.delete(key)
+
+    assert test_hash_map.exists(key) is False

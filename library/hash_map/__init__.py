@@ -75,3 +75,14 @@ class HashMap:
         """
         index = self._calculate_index(key)
         return self._buckets[index].exists(key)
+
+    def delete(self, key):
+        """
+        Remove key.
+
+        Args:
+            key: The key to remove.
+
+        """
+        index = self._calculate_index(key)
+        return self._buckets[index].delete(key)
