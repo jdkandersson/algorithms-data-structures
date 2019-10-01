@@ -111,3 +111,7 @@ class HashMap:
         for bucket_ in self._buckets:
             bucket_.clear()
         self._size = 0
+
+    def clone(self):
+        """Clone map."""
+        return HashMap(capacity=self._capacity, source=iter(self))

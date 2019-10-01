@@ -483,3 +483,68 @@ def test_construct_source(elements):
     assert len(element_set) == len(elements)
     for element in elements:
         assert element in element_set
+
+
+@pytest.mark.parametrize(
+    "elements",
+    [
+        [],
+        [("key 1", "value 1")],
+        [("key 1", "value 1"), ("key 2", "value 2")],
+        [
+            ("key 1", "value 1"),
+            ("key 2", "value 2"),
+            ("key 4", "value 4"),
+            ("key 8", "value 8"),
+            ("key 16", "value 16"),
+            ("key 32", "value 32"),
+            ("key 64", "value 64"),
+        ],
+    ],
+    ids=["empty", "single", "multiple", "many"],
+)
+def test_clone_elements(elements):
+    """
+    GIVEN empty hash map and elements to add to it
+    WHEN hash map is constructed with list as source and cloned
+    THEN cloned map contains each element in the list.
+    """
+    test_hash_map = hash_map.HashMap(source=elements)
+
+    cloned_hash_map = test_hash_map.clone()
+
+    element_set = set(iter(cloned_hash_map))
+    assert len(element_set) == len(elements)
+    for element in elements:
+        assert element in element_set
+
+
+def test_clone_not_same():
+    """
+    GIVEN empty hash map
+    WHEN hash map is cloned
+    THEN the cloned map is not the same object and contains different buckets.
+    """
+    test_hash_map = hash_map.HashMap()
+
+    cloned_hash_map = test_hash_map.clone()
+
+    assert id(cloned_hash_map) != id(test_hash_map)
+    for original_bucket, cloned_bucket in zip(
+        test_hash_map._buckets, cloned_hash_map._buckets
+    ):
+        assert id(original_bucket) != id(cloned_bucket)
+
+
+def test_clone_capacity_copied():
+    """
+    GIVEN empty hash map and capacity of the hash map
+    WHEN hash map is cloned
+    THEN the cloned map has the same capacity.
+    """
+    capacity = 1
+    test_hash_map = hash_map.HashMap(capacity)
+
+    cloned_hash_map = test_hash_map.clone()
+
+    assert cloned_hash_map._capacity == capacity
