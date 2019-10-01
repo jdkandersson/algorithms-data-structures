@@ -17,6 +17,11 @@ class HashMap:
         # Buckets with values
         self._buckets = [bucket.Bucket() for _ in range(self._capacity)]
 
+    @property
+    def size(self):
+        """Get the number of elements in the map."""
+        return self._size
+
     def _calculate_index(self, key):
         """
         Calculate the index for the bucket that stores the key.
@@ -43,6 +48,9 @@ class HashMap:
             value: The value to associate with the key.
 
         """
+        print("set call")
+        if not self.exists(key):
+            self._size += 1
         index = self._calculate_index(key)
         self._buckets[index].insert(key, value)
 
@@ -85,4 +93,6 @@ class HashMap:
 
         """
         index = self._calculate_index(key)
-        return self._buckets[index].delete(key)
+        value = self._buckets[index].delete(key)
+        self._size -= 1
+        return value

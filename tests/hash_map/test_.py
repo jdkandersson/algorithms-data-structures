@@ -101,7 +101,7 @@ def test_set_calculate_index(
 
     mocked_buckets_hash_map.set_(key, "value 1")
 
-    mocked_buckets_hash_map._calculate_index.assert_called_once_with(key)
+    mocked_buckets_hash_map._calculate_index.assert_called_with(key)
 
 
 def test_set_insert(mocked_buckets_hash_map):  # pylint: disable=redefined-outer-name
@@ -329,3 +329,57 @@ def test_delete_present():
     test_hash_map.delete(key)
 
     assert test_hash_map.exists(key) is False
+
+
+@pytest.mark.parametrize(
+    "actions, expected_size",
+    [
+        ([], 0),
+        ([("set_", ("key 1", "value 1"))], 1),
+        ([("set_", ("key 1", "value 1")), ("set_", ("key 1", "value 2"))], 1),
+        ([("set_", ("key 1", "value 1")), ("delete", ("key 1",))], 0),
+        ([("set_", ("key 1", "value 1")), ("set_", ("key 2", "value 2"))], 2),
+        (
+            [
+                ("set_", ("key 1", "value 1")),
+                ("set_", ("key 2", "value 2")),
+                ("delete", ("key 2",)),
+            ],
+            1,
+        ),
+    ],
+    ids=[
+        "empty,0",
+        "set,1",
+        "set-update,1",
+        "set-delete,0",
+        "set-set,2",
+        "set-set-delete,1",
+    ],
+)
+def test_size(actions, expected_size):
+    """
+    GIVEN empty hash map, actions to modify the hash map and expected size
+    WHEN the actions are performed on the map
+    THEN the map has the expected size.
+    """
+    test_hash_map = hash_map.HashMap()
+    for operation, args in actions:
+        getattr(test_hash_map, operation)(*args)
+
+    assert test_hash_map.size == expected_size
+
+
+def test_size_delete_raises():
+    """
+    GIVEN hash map with a single element
+    WHEN delete is called with a different key than the element
+    THEN size is not decremented.
+    """
+    test_hash_map = hash_map.HashMap()
+    test_hash_map.set_("key 1", "value 1")
+
+    with pytest.raises(KeyError):
+        test_hash_map.delete("key 2")
+
+    assert test_hash_map.size == 1
