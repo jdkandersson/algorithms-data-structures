@@ -417,3 +417,37 @@ def test_iterate(elements):
     assert len(element_set) == len(elements)
     for element in elements:
         assert element in element_set
+
+
+@pytest.mark.parametrize(
+    "elements",
+    [
+        [],
+        [("key 1", "value 1")],
+        [("key 1", "value 1"), ("key 2", "value 2")],
+        [
+            ("key 1", "value 1"),
+            ("key 2", "value 2"),
+            ("key 4", "value 4"),
+            ("key 8", "value 8"),
+            ("key 16", "value 16"),
+            ("key 32", "value 32"),
+            ("key 64", "value 64"),
+        ],
+    ],
+    ids=["empty", "single", "multiple", "many"],
+)
+def test_clear(elements):
+    """
+    GIVEN empty hash map and elements to set
+    WHEN elements are set and clear is called
+    THEN the map has zero size and iterating over it returns an empty list.
+    """
+    test_hash_map = hash_map.HashMap()
+    for element in elements:
+        test_hash_map.set_(*element)
+
+    test_hash_map.clear()
+
+    assert test_hash_map.size == 0
+    assert list(iter(test_hash_map)) == []

@@ -100,3 +100,9 @@ class HashMap:
         """Iterate over all elements in the map."""
         for bucket_ in self._buckets:
             yield from bucket_.__iter__()
+
+    def clear(self):
+        """Remove all elements from the map."""
+        for bucket_ in self._buckets:
+            bucket_.clear()
+        self._size = 0
