@@ -383,3 +383,37 @@ def test_size_delete_raises():
         test_hash_map.delete("key 2")
 
     assert test_hash_map.size == 1
+
+
+@pytest.mark.parametrize(
+    "elements",
+    [
+        [],
+        [("key 1", "value 1")],
+        [("key 1", "value 1"), ("key 2", "value 2")],
+        [
+            ("key 1", "value 1"),
+            ("key 2", "value 2"),
+            ("key 4", "value 4"),
+            ("key 8", "value 8"),
+            ("key 16", "value 16"),
+            ("key 32", "value 32"),
+            ("key 64", "value 64"),
+        ],
+    ],
+    ids=["empty", "single", "multiple", "many"],
+)
+def test_iterate(elements):
+    """
+    GIVEN empty hash map and elements to set
+    WHEN elements are set and the map is iterated over
+    THEN all elements are returned.
+    """
+    test_hash_map = hash_map.HashMap()
+    for element in elements:
+        test_hash_map.set_(*element)
+
+    element_set = set(iter(test_hash_map))
+    assert len(element_set) == len(elements)
+    for element in elements:
+        assert element in element_set

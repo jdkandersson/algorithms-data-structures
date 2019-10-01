@@ -48,7 +48,6 @@ class HashMap:
             value: The value to associate with the key.
 
         """
-        print("set call")
         if not self.exists(key):
             self._size += 1
         index = self._calculate_index(key)
@@ -96,3 +95,8 @@ class HashMap:
         value = self._buckets[index].delete(key)
         self._size -= 1
         return value
+
+    def __iter__(self):
+        """Iterate over all elements in the map."""
+        for bucket_ in self._buckets:
+            yield from bucket_.__iter__()
