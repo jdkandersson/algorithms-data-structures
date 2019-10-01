@@ -42,6 +42,8 @@ This operation resets the size of the hash map and clears out each bucket. It ha
 
 Copy all values in the hash map to a new hash map. May or may not clone key value pairs. It has O(n) time complexity.
 
-### Is Empty
+## Observations
 
-This operation uses the size to determine whether the hash map is empty. It has O(1) time complexity.
+The hash map heavily relies on the bucket data structure to implement functionality. The value the hash map adds is the mapping from a key to a particular bucket. There is a case for changing the function that calculates the index to be a decorator, although the difference is minor. There will still be a line using that decorator instead of a function call within each function implementing an feature. It would also change the arguments which makes it harder to understand the implementation.
+
+The change in the number of buckets has not been implemented, but given the other functions available, such as clone, iterability and a constructor that takes a source, it would not be difficult to implement. A check for the load factor would need to be made on adding an element and remove an element to determine whether the number of buckets should be changed. If it does, it would be an expensive operation as the old distribution of elements among buckets might not be valid anymore. Without the adjustment the hash map does not have O(1) time complexity for all of the operations. Instead, the time complexity of the bucket data structure applies.
