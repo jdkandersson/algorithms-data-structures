@@ -8,7 +8,7 @@ from . import bucket
 class HashMap:
     """Implements the has map data structure."""
 
-    def __init__(self, capacity=16):
+    def __init__(self, capacity=16, source=None):
         """Construct."""
         # The number of buckets
         self._capacity = capacity
@@ -16,6 +16,11 @@ class HashMap:
         self._size = 0
         # Buckets with values
         self._buckets = [bucket.Bucket() for _ in range(self._capacity)]
+        # Adding initial values
+        if source is None:
+            return
+        for element in source:
+            self.set_(*element)
 
     @property
     def size(self):

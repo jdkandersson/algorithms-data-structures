@@ -451,3 +451,35 @@ def test_clear(elements):
 
     assert test_hash_map.size == 0
     assert list(iter(test_hash_map)) == []
+
+
+@pytest.mark.parametrize(
+    "elements",
+    [
+        [],
+        [("key 1", "value 1")],
+        [("key 1", "value 1"), ("key 2", "value 2")],
+        [
+            ("key 1", "value 1"),
+            ("key 2", "value 2"),
+            ("key 4", "value 4"),
+            ("key 8", "value 8"),
+            ("key 16", "value 16"),
+            ("key 32", "value 32"),
+            ("key 64", "value 64"),
+        ],
+    ],
+    ids=["empty", "single", "multiple", "many"],
+)
+def test_construct_source(elements):
+    """
+    GIVEN list of key value tuples
+    WHEN hash map is constructed with list as source
+    THEN map contains each element in the list.
+    """
+    test_hash_map = hash_map.HashMap(source=elements)
+
+    element_set = set(iter(test_hash_map))
+    assert len(element_set) == len(elements)
+    for element in elements:
+        assert element in element_set
