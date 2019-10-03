@@ -548,3 +548,36 @@ def test_clone_capacity_copied():
     cloned_hash_map = test_hash_map.clone()
 
     assert cloned_hash_map._capacity == capacity
+
+
+@pytest.mark.parametrize(
+    "initial_capacity, initial_size, expected_capacity",
+    [(16, 11, 16), (16, 12, 32), (32, 13, 32), (32, 24, 64)],
+    ids=[
+        "16,11,no increase",
+        "16,12,buckets double",
+        "32,13,no increase",
+        "32,24,buckets double",
+    ],
+)
+def test_resize_up(initial_capacity, initial_size, expected_capacity):
+    """
+    GIVEN empty hash map, initial capacity, initial number of elements and
+        expected capacity
+    WHEN the initial size plus one key and value is added to the map
+    THEN the capacity is the expected final capacity and all added key value pairs are
+        still in the map.
+    """
+    elements = [
+        (f"key {idx + 1}", f"value {idx + 1}") for idx in range(initial_size + 1)
+    ]
+
+    test_hash_map = hash_map.HashMap(initial_capacity, elements)
+
+    assert test_hash_map._capacity == expected_capacity
+    assert len(test_hash_map._buckets) == expected_capacity
+    assert test_hash_map.size == initial_size + 1
+    element_set = set(iter(test_hash_map))
+    assert len(element_set) == len(elements)
+    for element in elements:
+        assert element in element_set

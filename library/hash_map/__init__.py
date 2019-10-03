@@ -49,12 +49,32 @@ class HashMap:
         Set the value for the key.
 
         Args:
-            jey: The identifier for the value.
+            key: The identifier for the value.
             value: The value to associate with the key.
 
         """
+        # Checking whether capacity needs to be expanded
+        if self._size / self._capacity >= 0.75:
+            existing_key_values = list(iter(self))
+            self._capacity = 2 * self._capacity
+            self._buckets = [bucket.Bucket() for _ in range(self._capacity)]
+            for existing_key, existing_value in existing_key_values:
+                self._set(existing_key, existing_value)
+
+        # Adding new element
         if not self.exists(key):
             self._size += 1
+        self._set(key, value)
+
+    def _set(self, key, value):
+        """
+        Set the value for the key.
+
+        Args:
+            key: The identifier for the value.
+            value: The value to associate with the key.
+
+        """
         index = self._calculate_index(key)
         self._buckets[index].insert(key, value)
 
