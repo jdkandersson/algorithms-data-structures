@@ -581,3 +581,36 @@ def test_resize_up(initial_capacity, initial_size, expected_capacity):
     assert len(element_set) == len(elements)
     for element in elements:
         assert element in element_set
+
+
+@pytest.mark.parametrize(
+    "initial_capacity, initial_size, expected_capacity",
+    [(32, 13, 32), (32, 12, 16), (16, 11, 16), (16, 6, 16), (64, 24, 32)],
+    ids=[
+        "32,13,no decrease",
+        "32,12,buckets halve",
+        "16,11,no decrease",
+        "16,6,no decrease",
+        "64,24,buckets halve",
+    ],
+)
+def test_resize_down(initial_capacity, initial_size, expected_capacity):
+    """
+    GIVEN empty hash map, initial capacity, initial number of elements and
+        expected capacity
+    WHEN the initial size is added to the map and then one is removed
+    THEN the capacity is the expected final capacity and all key value pairs except the
+        removed pair are still in the map.
+    """
+    elements = [(f"key {idx + 1}", f"value {idx + 1}") for idx in range(initial_size)]
+
+    test_hash_map = hash_map.HashMap(initial_capacity, elements)
+    test_hash_map.delete(elements[-1][0])
+
+    assert test_hash_map._capacity == expected_capacity
+    assert len(test_hash_map._buckets) == expected_capacity
+    assert test_hash_map.size == initial_size - 1
+    element_set = set(iter(test_hash_map))
+    assert len(element_set) == len(elements[:-1])
+    for element in elements[:-1]:
+        assert element in element_set

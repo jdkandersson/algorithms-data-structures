@@ -55,10 +55,10 @@ class HashMap:
         """
         # Checking whether capacity needs to be expanded
         if self._size / self._capacity >= 0.75:
-            existing_key_values = list(iter(self))
+            existing_elements = list(iter(self))
             self._capacity = 2 * self._capacity
             self._buckets = [bucket.Bucket() for _ in range(self._capacity)]
-            for existing_key, existing_value in existing_key_values:
+            for existing_key, existing_value in existing_elements:
                 self._set(existing_key, existing_value)
 
         # Adding new element
@@ -116,6 +116,15 @@ class HashMap:
             key: The key to remove.
 
         """
+        # Checking whether the number of buckets should be decreased
+        if self._capacity > 16 and self._size / (self._capacity / 2) <= 0.75:
+            existing_elements = list(iter(self))
+            self._capacity = int(self._capacity / 2)
+            self._buckets = [bucket.Bucket() for _ in range(self._capacity)]
+            for existing_key, existing_value in existing_elements:
+                self._set(existing_key, existing_value)
+
+        # Removing element from the map
         index = self._calculate_index(key)
         value = self._buckets[index].delete(key)
         self._size -= 1
