@@ -9,7 +9,19 @@ class HashMap:
     """Implements the has map data structure."""
 
     def __init__(self, capacity=16, source=None):
-        """Construct."""
+        """
+        Construct.
+
+        Args:
+            capacity: The number of buckets to use. Should be a multiple of 2 and at
+                least 16.
+            source: Initial elements to add to the map.
+
+        """
+        if capacity < 16:
+            raise ValueError("Capacity should be at least 16.")
+        if capacity % 2 != 0:
+            raise ValueError("Capacity should be a multiple of 2.")
         # The number of buckets
         self._capacity = capacity
         # The number of elements

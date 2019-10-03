@@ -9,6 +9,24 @@ from library import hash_map
 
 
 @pytest.mark.parametrize(
+    "capacity, raises",
+    [(0, True), (15, True), (16, False), (17, True), (32, False)],
+    ids=["too small", "too small", "minimum size", "not multiple of 2", "larger size"],
+)
+def test_construct_capacity(capacity, raises):
+    """
+    GIVEN initial capacity and whether ValueError should be raised
+    WHEN a HashMap is constructed with the capacity
+    THEN ValueError is raised when expected raises is True.
+    """
+    if raises:
+        with pytest.raises(ValueError):
+            hash_map.HashMap(capacity)
+    else:
+        hash_map.HashMap(capacity)
+
+
+@pytest.mark.parametrize(
     "key, capacity, expected_index",
     [
         (1, 16, 11),
@@ -542,7 +560,7 @@ def test_clone_capacity_copied():
     WHEN hash map is cloned
     THEN the cloned map has the same capacity.
     """
-    capacity = 1
+    capacity = 16
     test_hash_map = hash_map.HashMap(capacity)
 
     cloned_hash_map = test_hash_map.clone()
