@@ -32,11 +32,11 @@ To ensure O(1) time complexity, this is maintained separately and returned on de
 
 ### Iterate over elements
 
-This operation iterates over each bucket and value in the bucket. It has O(n) time complexity.
+This operation iterates over each bucket and value in the bucket. It has O(n) time complexity. No guarantees are made for the order of elements.
 
 ### Clear
 
-This operation resets the size of the hash map and clears out each bucket. It has O(n) time complexity.
+This operation resets the size of the hash map and clears out each bucket. It has O(n) time complexity. It might be faster to let the hash map be garbage collected and to construct a new map.
 
 ### Clone
 
