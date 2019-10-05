@@ -149,3 +149,17 @@ def test_clone_elements(elements):
     assert len(element_set) == len(elements)
     for element in elements:
         assert element in element_set
+
+
+@pytest.mark.parametrize("capacity", [16, 32])
+def test_clone_capacity(capacity):
+    """
+    GIVEN capacity
+    WHEN HashMap is constructed with the capacity and cloned
+    THEN the cloned HashSet's underlying HashMap has the capacity.
+    """
+    test_hash_set = hash_set.HashSet(capacity)
+
+    cloned_hash_set = test_hash_set.clone()
+
+    assert cloned_hash_set._hash_map.capacity == capacity
