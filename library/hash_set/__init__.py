@@ -8,9 +8,14 @@ PRESENT = True
 class HashSet:
     """Implements HashSet based on HashMap."""
 
-    def __init__(self, capacity=16):
+    def __init__(self, capacity=16, source=None):
         """Construct."""
-        self._hash_map = hash_map.HashMap(capacity)
+        if source is not None:
+            self._hash_map = hash_map.HashMap(
+                capacity, ((element, PRESENT) for element in source)
+            )
+        else:
+            self._hash_map = hash_map.HashMap(capacity)
 
     def add(self, value):
         """
@@ -41,3 +46,8 @@ class HashSet:
 
         """
         return self._hash_map.exists(value)
+
+    def __iter__(self):
+        """Iterate over elements in the hash set."""
+        for key, _ in iter(self._hash_map):
+            yield key

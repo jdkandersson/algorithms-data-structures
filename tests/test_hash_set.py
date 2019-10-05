@@ -6,7 +6,7 @@ import pytest
 from library import hash_set
 
 
-def test_construct():
+def test_construct_capacity():
     """
     GIVEN capacity
     WHEN HashSet is constricted with the capacity
@@ -17,6 +17,23 @@ def test_construct():
     test_hash_set = hash_set.HashSet(capacity)
 
     assert test_hash_set._hash_map._capacity == capacity
+
+
+@pytest.mark.parametrize(
+    "elements",
+    [[], ["element 1"], ["element 1", "element 2"]],
+    ids=["empty", "single", "multiple"],
+)
+def test_construct_source(elements):
+    """
+    GIVEN elements
+    WHEN HashMap is constructed with the elements as the source
+    THEN each element is contained in the underlying data structure.
+    """
+    test_hash_set = hash_set.HashSet(source=elements)
+
+    for element in elements:
+        assert test_hash_set._hash_map.exists(element)
 
 
 @pytest.fixture
@@ -72,3 +89,12 @@ def test_contains(element, expected_result, single_set):
     result = single_set.contains(element)
 
     assert result == expected_result
+
+
+def test_iter(single_set):
+    """
+    GIVEN HashSet with single element
+    WHEN the hash set is iterated
+    THEN the element is returned.
+    """
+    assert list(iter(single_set)) == ["element 1"]
