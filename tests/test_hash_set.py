@@ -91,10 +91,20 @@ def test_contains(element, expected_result, single_set):
     assert result == expected_result
 
 
-def test_iter(single_set):
+@pytest.mark.parametrize(
+    "elements",
+    [[], ["element 1"], ["element 1", "element 2"]],
+    ids=["empty", "single", "multiple"],
+)
+def test_iter(elements):
     """
-    GIVEN HashSet with single element
-    WHEN the hash set is iterated
-    THEN the element is returned.
+    GIVEN elements
+    WHEN the hash set is constructed with the elements and iterated over
+    THEN the elements are returned.
     """
-    assert list(iter(single_set)) == ["element 1"]
+    test_hash_set = hash_set.HashSet(source=elements)
+
+    element_set = set(iter(test_hash_set))
+    assert len(element_set) == len(elements)
+    for element in elements:
+        assert element in element_set
