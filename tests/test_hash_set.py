@@ -117,3 +117,14 @@ def test_size(single_set):
     THEN the size is 1.
     """
     assert single_set.size == 1
+
+
+def test_clear(single_set):
+    """
+    GIVEN HashSet with single element
+    WHEN clear is called
+    THEN the size is 0.
+    """
+    single_set.clear()
+
+    assert single_set.size == 0

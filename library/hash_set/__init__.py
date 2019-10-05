@@ -62,3 +62,7 @@ class HashSet:
 
         """
         return self._hash_map.size
+
+    def clear(self):
+        """Remove all elements from the set."""
+        self._hash_map.clear()
