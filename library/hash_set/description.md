@@ -33,3 +33,7 @@ This operation resets clears out all elements from the set. It has O(n) time com
 ### Clone
 
 Copy all elements in the hash set to a new hash set. May or may not clone individual elements. It has O(n) time complexity.
+
+## Observations
+
+Implementing the HashSet relies on the HashMap functions. In fact, it is a thin wrapper around HashMap. The difference is that each added element is added to the HashMap with the element set to the key and the value set to some constant. This means a little logic is required for constructing from a source of elements, adding elements to the set and iterating over the set. The other functions are one liners using the operations exposed by the HashMap.
