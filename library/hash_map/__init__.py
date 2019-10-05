@@ -39,6 +39,11 @@ class HashMap:
         """Get the number of elements in the map."""
         return self._size
 
+    @property
+    def capacity(self):
+        """Get the number of buckets in the map."""
+        return self._capacity
+
     def _calculate_index(self, key):
         """
         Calculate the index for the bucket that stores the key.

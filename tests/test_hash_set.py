@@ -16,7 +16,7 @@ def test_construct_capacity():
 
     test_hash_set = hash_set.HashSet(capacity)
 
-    assert test_hash_set._hash_map._capacity == capacity
+    assert test_hash_set._hash_map.capacity == capacity
 
 
 @pytest.mark.parametrize(
@@ -128,3 +128,24 @@ def test_clear(single_set):
     single_set.clear()
 
     assert single_set.size == 0
+
+
+@pytest.mark.parametrize(
+    "elements",
+    [[], ["element 1"], ["element 1", "element 2"]],
+    ids=["empty", "single", "multiple"],
+)
+def test_clone_elements(elements):
+    """
+    GIVEN elements
+    WHEN the hash set is constructed with the elements and cloned
+    THEN the cloned set has all elements.
+    """
+    test_hash_set = hash_set.HashSet(source=elements)
+
+    cloned_hash_set = test_hash_set.clone()
+
+    element_set = set(iter(cloned_hash_set))
+    assert len(element_set) == len(elements)
+    for element in elements:
+        assert element in element_set

@@ -66,3 +66,13 @@ class HashSet:
     def clear(self):
         """Remove all elements from the set."""
         self._hash_map.clear()
+
+    def clone(self):
+        """
+        Return a new set that has all the elements in the set.
+
+        Returns:
+            A new set with all the elements in the set.
+
+        """
+        return HashSet(self._hash_map.capacity, iter(self))

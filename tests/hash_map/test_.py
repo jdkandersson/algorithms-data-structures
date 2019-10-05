@@ -565,7 +565,7 @@ def test_clone_capacity_copied():
 
     cloned_hash_map = test_hash_map.clone()
 
-    assert cloned_hash_map._capacity == capacity
+    assert cloned_hash_map.capacity == capacity
 
 
 @pytest.mark.parametrize(
@@ -592,7 +592,7 @@ def test_resize_up(initial_capacity, initial_size, expected_capacity):
 
     test_hash_map = hash_map.HashMap(initial_capacity, elements)
 
-    assert test_hash_map._capacity == expected_capacity
+    assert test_hash_map.capacity == expected_capacity
     assert len(test_hash_map._buckets) == expected_capacity
     assert test_hash_map.size == initial_size + 1
     element_set = set(iter(test_hash_map))
@@ -625,7 +625,7 @@ def test_resize_down(initial_capacity, initial_size, expected_capacity):
     test_hash_map = hash_map.HashMap(initial_capacity, elements)
     test_hash_map.delete(elements[-1][0])
 
-    assert test_hash_map._capacity == expected_capacity
+    assert test_hash_map.capacity == expected_capacity
     assert len(test_hash_map._buckets) == expected_capacity
     assert test_hash_map.size == initial_size - 1
     element_set = set(iter(test_hash_map))
