@@ -51,3 +51,14 @@ class HashSet:
         """Iterate over elements in the hash set."""
         for key, _ in iter(self._hash_map):
             yield key
+
+    @property
+    def size(self):
+        """
+        Get the number of elements in the set.
+
+        Returns:
+            The number of elements in the set.
+
+        """
+        return self._hash_map.size

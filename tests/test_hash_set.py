@@ -108,3 +108,12 @@ def test_iter(elements):
     assert len(element_set) == len(elements)
     for element in elements:
         assert element in element_set
+
+
+def test_size(single_set):
+    """
+    GIVEN HashSet with single element
+    WHEN
+    THEN the size is 1.
+    """
+    assert single_set.size == 1
