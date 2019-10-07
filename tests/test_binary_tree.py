@@ -175,3 +175,36 @@ def test_node_branch_search_greater_return(branch_node: binary_tree.Node):
     return_value = branch_node.search(value)
 
     assert return_value == branch_node.right.search.return_value
+
+
+def test_node_leaf_get_smallest(leaf_node):
+    """
+    GIVEN leaf node
+    WHEN get_smallest is called
+    THEN the node value is returned.
+    """
+    value = leaf_node.get_smallest()
+
+    assert value == 0
+
+
+def test_node_branch_get_smallest_call(branch_node):
+    """
+    GIVEN branch node
+    WHEN get_smallest is called
+    THEN the right node get_smallest is called.
+    """
+    branch_node.get_smallest()
+
+    branch_node.right.get_smallest.assert_called_once_with()
+
+
+def test_node_branch_get_smallest_return(branch_node):
+    """
+    GIVEN branch node
+    WHEN get_smallest is called
+    THEN the right node get_smallest return value is returned.
+    """
+    value = branch_node.get_smallest()
+
+    assert value == branch_node.right.get_smallest.return_value

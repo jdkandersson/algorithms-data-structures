@@ -49,3 +49,15 @@ class Node:
         if self.left is None:
             return None
         return self.left.search(value)
+
+    def get_smallest(self):
+        """
+        Get the smallest value in the right subtree.
+
+        Returns:
+            The smallest value in the right subtree.
+
+        """
+        if self.right is None:
+            return self.value
+        return self.right.get_smallest()
