@@ -52,12 +52,12 @@ class Node:
 
     def get_smallest(self):
         """
-        Get the smallest value in the right subtree.
+        Get the smallest value in the subtree starting with the node as root.
 
         Returns:
-            The smallest value in the right subtree.
+            The smallest value in the subtree.
 
         """
-        if self.right is None:
+        if self.left is None:
             return self.value
-        return self.right.get_smallest()
+        return self.left.get_smallest()

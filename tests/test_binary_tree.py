@@ -192,19 +192,19 @@ def test_node_branch_get_smallest_call(branch_node):
     """
     GIVEN branch node
     WHEN get_smallest is called
-    THEN the right node get_smallest is called.
+    THEN the left node get_smallest is called.
     """
     branch_node.get_smallest()
 
-    branch_node.right.get_smallest.assert_called_once_with()
+    branch_node.left.get_smallest.assert_called_once_with()
 
 
 def test_node_branch_get_smallest_return(branch_node):
     """
     GIVEN branch node
     WHEN get_smallest is called
-    THEN the right node get_smallest return value is returned.
+    THEN the left node get_smallest return value is returned.
     """
     value = branch_node.get_smallest()
 
-    assert value == branch_node.right.get_smallest.return_value
+    assert value == branch_node.left.get_smallest.return_value
