@@ -19,18 +19,33 @@ class Node:
 
         """
         if value > self.value:
-            print("right")
             if self.right is None:
-                print("new node")
                 self.right = Node(value)
                 return
-            print("existing node")
             self.right.insert(value)
             return
-        print("left")
         if self.left is None:
-            print("new node")
             self.left = Node(value)
             return
-        print("existing node")
         self.left.insert(value)
+
+    def search(self, value):
+        """
+        Search for a value in the subtree with the node as the head.
+
+        Args:
+            value: The value to search for.
+
+        Returns:
+            The value if it was found or None if it was not.
+
+        """
+        if value == self.value:
+            return self.value
+        if value > self.value:
+            if self.right is None:
+                return None
+            return self.right.search(value)
+        if self.left is None:
+            return None
+        return self.left.search(value)

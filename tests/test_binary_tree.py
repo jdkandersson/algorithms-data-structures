@@ -14,7 +14,7 @@ def leaf_node():
     return binary_tree.Node(0)
 
 
-def test_insert_leaf_less(leaf_node: binary_tree.Node):
+def test_node_leaf_insert_less(leaf_node: binary_tree.Node):
     """
     GIVEN leaf node and value that is less than the node value
     WHEN insert is called with the value
@@ -30,7 +30,7 @@ def test_insert_leaf_less(leaf_node: binary_tree.Node):
     assert leaf_node.left.right is None
 
 
-def test_insert_leaf_equal(leaf_node: binary_tree.Node):
+def test_node_leaf_insert_equal(leaf_node: binary_tree.Node):
     """
     GIVEN leaf node and value that is equal to the node value
     WHEN insert is called with the value
@@ -46,7 +46,7 @@ def test_insert_leaf_equal(leaf_node: binary_tree.Node):
     assert leaf_node.left.right is None
 
 
-def test_insert_leaf_greater(leaf_node: binary_tree.Node):
+def test_node_leaf_insert_greater(leaf_node: binary_tree.Node):
     """
     GIVEN leaf node and value that is greater than the node value
     WHEN insert is called with the value
@@ -70,7 +70,7 @@ def branch_node(leaf_node: binary_tree.Node):
     return leaf_node
 
 
-def test_insert_branch_less(branch_node: binary_tree.Node):
+def test_node_branch_insert_less(branch_node: binary_tree.Node):
     """
     GIVEN branch node and value that is less than the node value
     WHEN insert is called with the value
@@ -83,7 +83,7 @@ def test_insert_branch_less(branch_node: binary_tree.Node):
     branch_node.left.insert.assert_called_once_with(value)
 
 
-def test_insert_branch_equal(branch_node: binary_tree.Node):
+def test_node_branch_insert_equal(branch_node: binary_tree.Node):
     """
     GIVEN branch node and value that is equal to the node value
     WHEN insert is called with the value
@@ -96,7 +96,7 @@ def test_insert_branch_equal(branch_node: binary_tree.Node):
     branch_node.left.insert.assert_called_once_with(value)
 
 
-def test_insert_branch_greater(branch_node: binary_tree.Node):
+def test_node_branch_insert_greater(branch_node: binary_tree.Node):
     """
     GIVEN branch node and value that is greater than the node value
     WHEN insert is called with the value
@@ -107,3 +107,71 @@ def test_insert_branch_greater(branch_node: binary_tree.Node):
     branch_node.insert(value)
 
     branch_node.right.insert.assert_called_once_with(value)
+
+
+@pytest.mark.parametrize(
+    "value, expected_value",
+    [(0, 0), (-1, None), (1, None)],
+    ids=["hit", "miss less", "miss greater"],
+)
+def test_node_leaf_search(value, expected_value, leaf_node):
+    """
+    GIVEN leaf node, value to search for and expected value
+    WHEN search is called on the node with the value
+    THEN the expected value is returned.
+    """
+    returned_value = leaf_node.search(value)
+
+    assert returned_value == expected_value
+
+
+def test_node_branch_search_less_call(branch_node: binary_tree.Node):
+    """
+    GIVEN branch node and value that is less than the node value
+    WHEN search is called with the value
+    THEN the left child node search is called with the value.
+    """
+    value = -1
+
+    branch_node.search(value)
+
+    branch_node.left.search.assert_called_once_with(value)
+
+
+def test_node_branch_search_less_return(branch_node: binary_tree.Node):
+    """
+    GIVEN branch node and value that is less than the node value
+    WHEN search is called with the value
+    THEN the left child node search return value is returned.
+    """
+    value = -1
+
+    return_value = branch_node.search(value)
+
+    assert return_value == branch_node.left.search.return_value
+
+
+def test_node_branch_search_greater_call(branch_node: binary_tree.Node):
+    """
+    GIVEN branch node and value that is greater than the node value
+    WHEN search is called with the value
+    THEN the right child node search is called with the value.
+    """
+    value = 1
+
+    branch_node.search(value)
+
+    branch_node.right.search.assert_called_once_with(value)
+
+
+def test_node_branch_search_greater_return(branch_node: binary_tree.Node):
+    """
+    GIVEN branch node and value that is greater than the node value
+    WHEN search is called with the value
+    THEN the right child node search return value is returned.
+    """
+    value = 1
+
+    return_value = branch_node.search(value)
+
+    assert return_value == branch_node.right.search.return_value
