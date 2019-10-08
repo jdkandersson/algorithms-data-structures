@@ -444,3 +444,39 @@ def test_delete_branch_miss_right_return(branch_node):
     new_root = branch_node.delete(1)
 
     assert id(new_root) == id(branch_node)
+
+
+@pytest.mark.parametrize(
+    "value, expected_values",
+    [
+        (-3, [-2, -1, 0, 1, 2, 3]),
+        (-2, [-3, -1, 0, 1, 2, 3]),
+        (-1, [-3, -2, 0, 1, 2, 3]),
+        (0, [-3, -2, -1, 1, 2, 3]),
+        (1, [-3, -2, -1, 0, 2, 3]),
+        (2, [-3, -2, -1, 0, 1, 3]),
+        (3, [-3, -2, -1, 0, 1, 2]),
+    ],
+    ids=[
+        "left child's left child",
+        "left child",
+        "left child's right child",
+        "root",
+        "right child's left child",
+        "right child",
+        "right child's right child",
+    ],
+)
+def test_delete_integration(value, expected_values):
+    """
+    GIVEN node with many child nodes, value to delete and expected tree contents
+    WHEN delete is called with the value
+    THEN the tree contains the expected values.
+    """
+    left_child = binary_tree.Node(-2, binary_tree.Node(-3), binary_tree.Node(-1))
+    right_child = binary_tree.Node(2, binary_tree.Node(1), binary_tree.Node(3))
+    test_node = binary_tree.Node(0, left_child, right_child)
+
+    new_root = test_node.delete(value)
+
+    assert list(iter(new_root)) == expected_values
