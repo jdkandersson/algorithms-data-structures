@@ -98,4 +98,8 @@ class Node:
             return self
         if self.is_leaf():
             raise ValueError(f"{value} not found in the tree")
-        return None
+        if value < self.value:
+            self.left = self.left.delete(value)
+            return self
+        self.right = self.right.delete(value)
+        return self
