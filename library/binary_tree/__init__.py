@@ -90,6 +90,12 @@ class Node:
                 return self.right
             if self.right is None:
                 return self.left
+
+            # Getting the smallest value in the right subtree
+            smallest_in_right = self.right.get_smallest()
+            self.value = smallest_in_right
+            self.right = self.right.delete(smallest_in_right)
+            return self
         if self.is_leaf():
             raise ValueError(f"{value} not found in the tree")
         return None

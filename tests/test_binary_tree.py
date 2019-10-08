@@ -283,3 +283,67 @@ def test_delete_branch_single_right():
 
     assert id(right_child) == id(new_root)
     assert new_root.value == 1
+
+
+def test_delete_branch_get_smallest_call(branch_node):
+    """
+    GIVEN branch node and value that is equal to the node value
+    WHEN delete is called with the value
+    THEN get_smallest is called on the right child node.
+    """
+    right_child = branch_node.right
+
+    branch_node.delete(0)
+
+    right_child.get_smallest.assert_called_once_with()
+
+
+def test_delete_branch_value(branch_node):
+    """
+    GIVEN branch node and value that is equal to the node value
+    WHEN delete is called with the value
+    THEN get_smallest right node return value is set to the value.
+    """
+    right_child = branch_node.right
+
+    branch_node.delete(0)
+
+    assert branch_node.value == right_child.get_smallest.return_value
+
+
+def test_delete_branch_delete_call(branch_node):
+    """
+    GIVEN branch node and value that is equal to the node value
+    WHEN delete is called with the value
+    THEN delete is called on the right node with the get_smallest right node return
+        value.
+    """
+    right_child = branch_node.right
+
+    branch_node.delete(0)
+
+    right_child.delete.assert_called_once_with(right_child.get_smallest.return_value)
+
+
+def test_delete_branch_right_child(branch_node):
+    """
+    GIVEN branch node and value that is equal to the node value
+    WHEN delete is called with the value
+    THEN right child is set to the right child delete return value.
+    """
+    right_child = branch_node.right
+
+    branch_node.delete(0)
+
+    assert branch_node.right == right_child.delete.return_value
+
+
+def test_delete_branch_return(branch_node):
+    """
+    GIVEN branch node and value that is equal to the node value
+    WHEN delete is called with the value
+    THEN the node is returned.
+    """
+    new_root = branch_node.delete(0)
+
+    assert id(new_root) == id(branch_node)
