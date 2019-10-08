@@ -255,6 +255,29 @@ def test_delete_leaf_miss(leaf_node, value):
         leaf_node.delete(value)
 
 
+@pytest.mark.parametrize(
+    "args, expected_values",
+    [
+        ((0,), [0]),
+        ((0, binary_tree.Node(-1)), [-1, 0]),
+        ((0, None, binary_tree.Node(1)), [0, 1]),
+        ((0, binary_tree.Node(-1), binary_tree.Node(1)), [-1, 0, 1]),
+    ],
+    ids=["leaf", "branch right only", "branch left only", "branch"],
+)
+def test_iter(args, expected_values):
+    """
+    GIVEN args for node construction and expected values
+    WHEN node is constructed with the args and iterated
+    THEN the expected values are returned.
+    """
+    test_node = binary_tree.Node(*args)
+
+    values = list(iter(test_node))
+
+    assert values == expected_values
+
+
 def test_delete_branch_hit_single_left():
     """
     GIVEN branch node that has a left child and value that is equal to the node value

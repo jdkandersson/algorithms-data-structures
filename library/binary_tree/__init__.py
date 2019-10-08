@@ -72,6 +72,14 @@ class Node:
         """
         return self.left is None and self.right is None
 
+    def __iter__(self):
+        """Iterate over values."""
+        if self.left is not None:
+            yield from self.left.__iter__()
+        yield self.value
+        if self.right is not None:
+            yield from self.right.__iter__()
+
     def delete(self, value):
         """
         Delete the value out of the sub tree with the node as root.
