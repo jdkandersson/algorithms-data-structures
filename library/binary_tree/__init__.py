@@ -83,8 +83,13 @@ class Node:
             The new root node.
 
         """
-        if self.is_leaf():
-            if value == self.value:
+        if value == self.value:
+            if self.is_leaf():
                 return None
+            if self.left is None:
+                return self.right
+            if self.right is None:
+                return self.left
+        if self.is_leaf():
             raise ValueError(f"{value} not found in the tree")
         return None

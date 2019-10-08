@@ -253,3 +253,33 @@ def test_delete_leaf_miss(leaf_node, value):
     """
     with pytest.raises(ValueError):
         leaf_node.delete(value)
+
+
+def test_delete_branch_single_left():
+    """
+    GIVEN branch node that has a left child and value that is equal to the node value
+    WHEN delete is called with the value
+    THEN the left child is returned with the correct value.
+    """
+    left_child = binary_tree.Node(-1)
+    test_node = binary_tree.Node(0, left_child)
+
+    new_root = test_node.delete(0)
+
+    assert id(left_child) == id(new_root)
+    assert new_root.value == -1
+
+
+def test_delete_branch_single_right():
+    """
+    GIVEN branch node that has a left child and value that is equal to the node value
+    WHEN delete is called with the value
+    THEN the left child is returned with the correct value.
+    """
+    right_child = binary_tree.Node(1)
+    test_node = binary_tree.Node(0, None, right_child)
+
+    new_root = test_node.delete(0)
+
+    assert id(right_child) == id(new_root)
+    assert new_root.value == 1
