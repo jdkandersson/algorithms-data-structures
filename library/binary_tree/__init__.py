@@ -61,3 +61,30 @@ class Node:
         if self.left is None:
             return self.value
         return self.left.get_smallest()
+
+    def is_leaf(self):
+        """
+        Check whether the node is a leaf.
+
+        Returns:
+            Whether the node is a leaf.
+
+        """
+        return self.left is None and self.right is None
+
+    def delete(self, value):
+        """
+        Delete the value out of the sub tree with the node as root.
+
+        Args:
+            value: The value to delete.
+
+        Returns:
+            The new root node.
+
+        """
+        if self.is_leaf():
+            if value == self.value:
+                return None
+            raise ValueError(f"{value} not found in the tree")
+        return None
