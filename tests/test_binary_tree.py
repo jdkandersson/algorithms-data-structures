@@ -480,3 +480,35 @@ def test_delete_integration(value, expected_values):
     new_root = test_node.delete(value)
 
     assert list(iter(new_root)) == expected_values
+
+
+@pytest.mark.parametrize(
+    "values, expected_values",
+    [
+        ([], []),
+        ([0], [0]),
+        ([-1, 0, 1], [-1, 0, 1]),
+        ([0, -1, 1], [-1, 0, 1]),
+        ([-1, 1, 0], [-1, 0, 1]),
+    ],
+    ids=[
+        "empty",
+        "single",
+        "multiple in order",
+        "multiple pre order",
+        "multiple post order",
+    ],
+)
+def test_binary_tree_insert(values, expected_values):
+    """
+    GIVEN values to insert and expected values
+    WHEN binary tree is constructed, the values are inserted and the tree is iterated
+    THEN the tree contains all inserted values in the correct order.
+    """
+    test_binary_tree = binary_tree.BinaryTree()
+    for value in values:
+        test_binary_tree.insert(value)
+
+    returned_values = list(iter(test_binary_tree))
+
+    assert returned_values == expected_values

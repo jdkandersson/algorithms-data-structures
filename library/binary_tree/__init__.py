@@ -111,3 +111,29 @@ class Node:
             return self
         self.right = self.right.delete(value)
         return self
+
+
+class BinaryTree:
+    """Implementation of a binary tree."""
+
+    def __init__(self, root=None):
+        """Construct."""
+        self.root = root
+
+    def insert(self, value):
+        """
+        Insert value into the binary tree.
+
+        Args:
+            value: The value to insert.
+
+        """
+        if self.root is None:
+            self.root = Node(value)
+            return
+        self.root.insert(value)
+
+    def __iter__(self):
+        """Iterate over values in the tree in order."""
+        if self.root is not None:
+            yield from self.root.__iter__()
