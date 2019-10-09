@@ -490,6 +490,7 @@ def test_delete_integration(value, expected_values):
         ([-1, 0, 1], [-1, 0, 1]),
         ([0, -1, 1], [-1, 0, 1]),
         ([-1, 1, 0], [-1, 0, 1]),
+        ([1, 1], [1, 1]),
     ],
     ids=[
         "empty",
@@ -497,6 +498,7 @@ def test_delete_integration(value, expected_values):
         "multiple in order",
         "multiple pre order",
         "multiple post order",
+        "multiple duplicate",
     ],
 )
 def test_binary_tree_insert(values, expected_values):
