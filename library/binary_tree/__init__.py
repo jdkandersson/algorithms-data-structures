@@ -138,6 +138,21 @@ class BinaryTree:
         if self.root is not None:
             yield from self.root.__iter__()
 
+    def search(self, value):
+        """
+        Search for the value in the tree.
+
+        Args:
+            value: The value to search for.
+
+        Returns:
+            The value if found or None.
+
+        """
+        if self.root is None:
+            return None
+        return self.root.search(value)
+
     def delete(self, value):
         """
         Delete value from the tree.

@@ -549,3 +549,41 @@ def test_binary_tree_delete(values, delete_value, expected_values):
 
     returned_values = list(iter(test_binary_tree))
     assert returned_values == expected_values
+
+
+@pytest.mark.parametrize(
+    "values, search_value, expected_result",
+    [
+        ([], 0, None),
+        ([0], 0, 0),
+        ([0], 1, None),
+        ([-1, 0, 1], -2, None),
+        ([-1, 0, 1], -1, -1),
+        ([-1, 0, 1], 0, 0),
+        ([-1, 0, 1], 1, 1),
+        ([-1, 0, 1], 2, None),
+    ],
+    ids=[
+        "empty",
+        "single hit",
+        "single miss",
+        "multiple miss left",
+        "multiple first",
+        "multiple middle",
+        "multiple last",
+        "multiple miss right",
+    ],
+)
+def test_binary_tree_search(values, search_value, expected_result):
+    """
+    GIVEN values to insert, value to search for and expected result
+    WHEN values are inserted into the tree and the value is searched for
+    THEN the expected result is returned.
+    """
+    test_binary_tree = binary_tree.BinaryTree()
+    for value in values:
+        test_binary_tree.insert(value)
+
+    result = test_binary_tree.search(search_value)
+
+    assert result == expected_result
