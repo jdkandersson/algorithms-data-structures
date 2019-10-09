@@ -512,3 +512,40 @@ def test_binary_tree_insert(values, expected_values):
     returned_values = list(iter(test_binary_tree))
 
     assert returned_values == expected_values
+
+
+def test_binary_tree_delete_empty():
+    """
+    GIVEN empty binary tree
+    WHEN delete is called
+    THEN ValueError is raised.
+    """
+    test_binary_tree = binary_tree.BinaryTree()
+
+    with pytest.raises(ValueError):
+        test_binary_tree.delete(0)
+
+
+@pytest.mark.parametrize(
+    "values, delete_value, expected_values",
+    [
+        ([0], 0, []),
+        ([-1, 0, 1], -1, [0, 1]),
+        ([-1, 0, 1], 0, [-1, 1]),
+        ([-1, 0, 1], 1, [-1, 0]),
+    ],
+    ids=["single", "multiple first", "multiple middle", "multiple last"],
+)
+def test_binary_tree_delete(values, delete_value, expected_values):
+    """
+    GIVEN values to insert, value to delete and expected values
+    WHEN values are inserted into a binary tree the value is deleted
+    THEN the tree contains the expected values when it is iterated.
+    """
+    test_binary_tree = binary_tree.BinaryTree()
+    for value in values:
+        test_binary_tree.insert(value)
+    test_binary_tree.delete(delete_value)
+
+    returned_values = list(iter(test_binary_tree))
+    assert returned_values == expected_values

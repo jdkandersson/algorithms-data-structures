@@ -137,3 +137,17 @@ class BinaryTree:
         """Iterate over values in the tree in order."""
         if self.root is not None:
             yield from self.root.__iter__()
+
+    def delete(self, value):
+        """
+        Delete value from the tree.
+
+        Raises ValueError if the value is not in the tree.
+
+        Args:
+            value: The value to delete.
+
+        """
+        if self.root is None:
+            raise ValueError(f"{value} not found in the tree")
+        self.root = self.root.delete(value)
