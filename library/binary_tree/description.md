@@ -23,3 +23,9 @@ This operation is not O(1) because the node with the value has to be found first
 ### Traverse
 
 Due to the nature of the tree there are multiple ways of traversing the tree. For a binary search tree a logical traversal is the in order traversal which traverses the tree as the left child node first, then the value and then the right node. This means that the values are returned sorted according to their value. There is also pre-order traversal where the value is traversed before the left and right nodes. There is also post order traversal where the value is traversed after the left and right child. In this case only in order traversal is implemented.
+
+## Observations
+
+Most of the work for the different operations is done by the nodes of the tree. A common operation is to check which path to take. There may be an opportunity to encapsulate that choice in a separate function, however, that would come at the expense of readability.
+
+Implementing the delete method is the most complex due to the corner cases. One way of implementing the delete method is to operate on a node's children to implement deletion rather than on the node itself. This increases the complexity of the implementation. An alternative is to operate on the node itself, it does have the consequence that the new reference to the node has to be returned so that the parent can update its reference.
