@@ -8,15 +8,15 @@ A heap is often implemented as an array in a certain order. The order is that an
 
 ### Sift Down
 
-This operation has O(1) time complexity. It accepts an index n, which is taken as the root of a heap, and assumes that the child elements are themselves valid heaps. After the operation is complete, the heap rooted at n is also a valid heap. This operation is implemented by swapping the left and right child with the root element, if required.
+This operation has O(log(n)) time complexity. It assumes that the heaps rooted at the children are valid heaps. It accepts a start and end index. It starts at the start index and swaps the parent and children to satisfy the heap property, if required. If a swap is required, then the sift down operation proceeds on the swapped element as the start index.
 
 ### Sift Up
 
-This operation has O(log(n)) time complexity. It takes a start and end index. It starts at the end and proceeds up the heap swapping children with parents as required.
+This operation has O(log(n)) time complexity. It takes a start and end index. It starts at the end and checks if the child needs to be swapped with the parent. If it does, the algorithm proceeds up the tree until the root start index is reached.
 
 ### Heapify
 
-This operation turns an array into a heap. It either uses sift down or sift up to complete the transformation. If heapify is done using sift down, it has O(n) time complexity. If it is done using sift up, it has O(log(n)) time complexity. The reason is the difference in time complexity of the sift down and sift up algorithms.
+This operation turns an array into a heap. It either uses sift down or sift up to complete the transformation. If heapify is done using sift down, it has O(n) time complexity. If it is done using sift up, it has O(log(n)) time complexity. The reason is somewhat complex. The sift down operation, when used in the heapify algorithm, calls sift down mostly on sub heaps that have a depth of 1. The sift up version mostly operates on the sub heaps with a comparable depth as the full heap. Therefore, most of the time the sift down version has O(1) time complexity and the sift up version has O(log(n)) time complexity.
 
 ### Insert
 
