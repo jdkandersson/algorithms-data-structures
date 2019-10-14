@@ -53,3 +53,58 @@ def test_sift_down(initial, start, end, expected):
     test_heap._sift_down(start, end)
 
     assert test_heap._list == expected
+
+
+@pytest.mark.parametrize(
+    "initial, start, end, expected",
+    [
+        ([], 0, -1, []),
+        ([0], 0, 0, [0]),
+        ([1, 0], 0, 1, [1, 0]),
+        ([0, 1], 0, 1, [1, 0]),
+        ([2, 1, 0], 0, 1, [2, 1, 0]),
+        ([2, 1, 0], 0, 2, [2, 1, 0]),
+        ([1, 2, 0], 0, 1, [2, 1, 0]),
+        ([0, 1, 2], 0, 2, [2, 1, 0]),
+        ([6, 3, 4, 5, 2, 1, 0], 0, 3, [6, 5, 4, 3, 2, 1, 0]),
+        ([5, 3, 4, 6, 2, 1, 0], 0, 3, [6, 5, 4, 3, 2, 1, 0]),
+        ([5, 3, 4, 6, 2, 1, 0], 1, 3, [5, 6, 4, 3, 2, 1, 0]),
+        ([6, 5, 0, 3, 2, 1, 4], 0, 6, [6, 5, 4, 3, 2, 1, 0]),
+        ([5, 4, 1, 3, 2, 0, 6], 0, 6, [6, 4, 5, 3, 2, 0, 1]),
+        ([0, 5, 4, 3, 2, 1, 6], 2, 6, [0, 5, 6, 3, 2, 1, 4]),
+    ],
+    ids=[
+        "empty",
+        "single",
+        "two right order",
+        "two wrong order",
+        "three right order left",
+        "three right order right",
+        "three wrong order left",
+        "three wrong order right",
+        "seven wrong order sub tree child leftmost child",
+        "seven wrong order leftmost child",
+        "seven wrong order sub tree boundary leftmost child",
+        "seven wrong order sub child root rightmost child",
+        "seven wrong order rightmost child",
+        "seven wrong order sub tree boundary rightmost child",
+    ],
+)
+def test_sift_up(initial, start, end, expected):
+    """
+    GIVEN initial elements for the list of a heap that satisfy the heap property except
+        for possibly the element at end and the start and the end
+    WHEN _sift up is called with the start and the end
+    THEN the final list is equal to the expected list.
+    """
+    print(initial)
+    print(start)
+    print(end)
+    print(expected)
+    test_heap = heap.Heap()
+    test_heap._list = initial
+
+    test_heap._sift_up(start, end)
+    print(test_heap._list)
+
+    assert test_heap._list == expected
