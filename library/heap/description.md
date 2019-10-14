@@ -8,11 +8,11 @@ A heap is often implemented as an array in a certain order. The order is that an
 
 ### Sift Down
 
-This operation has O(log(n)) time complexity. It assumes that the heaps rooted at the children are valid heaps. It accepts a start and end index. It starts at the start index and swaps the parent and children to satisfy the heap property, if required. If a swap is required, then the sift down operation proceeds on the swapped element as the start index.
+This operation has O(log(n)) time complexity. It assumes that the heaps rooted at the children of the node that is started with are valid heaps. It accepts a start and end index. It starts at the start index and swaps the parent and children to satisfy the heap property, if required. If a swap is required, then the sift down operation proceeds on the swapped element as the start index.
 
 ### Sift Up
 
-This operation has O(log(n)) time complexity. It takes a start and end index. It starts at the end and checks if the child needs to be swapped with the parent. If it does, the algorithm proceeds up the tree until the root start index is reached.
+This operation has O(log(n)) time complexity. It assumes that the heap is valid except for possibly at the end node. It takes a start and end index. It starts at the end and checks if the child needs to be swapped with the parent. If it does, the algorithm proceeds up the tree until the root start index is reached.
 
 ### Heapify
 
