@@ -97,14 +97,9 @@ def test_sift_up(initial, start, end, expected):
     WHEN _sift up is called with the start and the end
     THEN the final list is equal to the expected list.
     """
-    print(initial)
-    print(start)
-    print(end)
-    print(expected)
     test_heap = heap.Heap()
     test_heap._list = initial
 
     test_heap._sift_up(start, end)
-    print(test_heap._list)
 
     assert test_heap._list == expected
