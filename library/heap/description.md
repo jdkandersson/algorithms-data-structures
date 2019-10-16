@@ -18,6 +18,10 @@ This operation has O(log(n)) time complexity. It assumes that the heap is valid 
 
 This operation turns an array into a heap. It either uses sift down or sift up to complete the transformation. If heapify is done using sift down, it has O(n) time complexity. If it is done using sift up, it has O(log(n)) time complexity. The reason is somewhat complex. The sift down operation, when used in the heapify algorithm, calls sift down mostly on sub heaps that have a depth of 1. The sift up version mostly operates on the sub heaps with a comparable depth as the full heap. Therefore, most of the time the sift down version has O(1) time complexity and the sift up version has O(log(n)) time complexity.
 
+### Sort
+
+This operation sorts the elements in the heap. It has O(n log(n)) time complexity. To go from an unsorted list to sorted based on the heap the unsorted list first is turned into a valid heap with time complexity O(n) assuming sift down is used. Then, the root element is swapped with the last element and sift down is called on the heap excluding the last element. This is done repeatedly until the unsorted portion of the heap is only a single element. To ensure the heap stays valid, the order of the elements is reversed. Then an iterator over the internal list is returned which yields the elements in the sorted order.
+
 ### Insert
 
 Insert a new element into the heap. This is usually done by adding the element to an empty slot at the end of the heap and then use the sift up  operation to ensure the heap property.
