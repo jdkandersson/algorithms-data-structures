@@ -4,9 +4,20 @@
 class Heap:
     """Heap implementation based on a list."""
 
-    def __init__(self):
-        """Construct."""
-        self._list = []
+    def __init__(self, source=None):
+        """
+        Construct.
+
+        Args:
+            source: The elements to initialize the heap with.
+
+        """
+        if source is None:
+            self._list = []
+            return
+
+        self._list = [value for value in source]
+        self._heapify()
 
     @staticmethod
     def left_child(index):

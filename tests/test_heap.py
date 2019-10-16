@@ -6,6 +6,23 @@ import pytest
 from library import heap
 
 
+@pytest.mark.parametrize(
+    "source, expected_list",
+    [(None, []), ([0, 1, 2], [2, 1, 0])],
+    ids=["source none", "source list"],
+)
+@pytest.mark.heap
+def test_construct(source, expected_list):
+    """
+    GIVEN source for construction and expected list
+    WHEN the Heap is constructed with the source
+    THEN the underlying list is set to the expected list.
+    """
+    test_heap = heap.Heap(source)
+
+    assert test_heap._list == expected_list
+
+
 @pytest.mark.heap
 @pytest.mark.parametrize(
     "initial, start, end, expected",
