@@ -156,3 +156,22 @@ class Heap:
         """
         self._list.append(value)
         self._sift_up(0, len(self._list) - 1)
+
+    def extract_max(self):
+        """
+        Remove the largest element from the heap and return it.
+
+        Raise IndexError if the list is empty.
+
+        Returns:
+            The largest element from the heap.
+
+        """
+        if not self._list:
+            raise IndexError
+
+        root_value = self._list[0]
+        self._list[0] = self._list[-1]
+        del self._list[-1]
+        self._sift_down(0, len(self._list) - 1)
+        return root_value

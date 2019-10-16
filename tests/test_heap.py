@@ -261,3 +261,37 @@ def test_insert(source, value, expected):
     test_heap.insert(value)
 
     assert test_heap._list == expected
+
+
+@pytest.mark.heap
+def test_extract_max_empty():
+    """
+    GIVEN empty heap
+    WHEN extract_max is called
+    THEN IndexError is raised.
+    """
+    test_heap = heap.Heap()
+
+    with pytest.raises(IndexError):
+        test_heap.extract_max()
+
+
+@pytest.mark.parametrize(
+    "source, expected_value, expected_list",
+    [([0], 0, []), ([3, 2, 1, 0], 3, [2, 0, 1])],
+    ids=["single", "multiple"],
+)
+@pytest.mark.heap
+def test_extract_max(source, expected_value, expected_list):
+    """
+    GIVEN source for heap, expected value and expected list
+    WHEN a heap is constructed with the source and extract_max is called
+    THEN the expected value is returned and the underlying list of the heap is the
+        expected list.
+    """
+    test_heap = heap.Heap(source)
+
+    value = test_heap.extract_max()
+
+    assert value == expected_value
+    assert test_heap._list == expected_list
