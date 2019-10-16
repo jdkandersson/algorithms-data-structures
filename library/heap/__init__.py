@@ -175,3 +175,13 @@ class Heap:
         del self._list[-1]
         self._sift_down(0, len(self._list) - 1)
         return root_value
+
+    def is_empty(self):
+        """
+        Check whether the heap is empty.
+
+        Returns:
+            Whether the heap is empty.
+
+        """
+        return len(self._list) == 0
