@@ -143,3 +143,16 @@ class Heap:
             end -= 1
 
         return iter(self._list)
+
+    def insert(self, value):
+        """
+        Add the value to the heap.
+
+        Assume the heap is already a valid heap.
+
+        Args:
+            value: The value top insert.
+
+        """
+        self._list.append(value)
+        self._sift_up(0, len(self._list) - 1)

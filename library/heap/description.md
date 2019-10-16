@@ -24,7 +24,7 @@ This operation sorts the elements in the heap. It has O(n log(n)) time complexit
 
 ### Insert
 
-Insert a new element into the heap. This is usually done by adding the element to an empty slot at the end of the heap and then use the sift up  operation to ensure the heap property.
+Insert a new element into the heap. This is usually done by adding the element to an empty slot at the end of the heap and then use the sift up operation to ensure the heap property.
 
 ### Extract Max (or Min)
 

@@ -208,6 +208,7 @@ def random_list(request):
     yield [random.randint(0, 100) for _ in range(request.param)]
 
 
+@pytest.mark.heap
 def test_sort_random(random_list):  # pylint: disable=redefined-outer-name
     """
     GIVEN random list
@@ -225,3 +226,38 @@ def test_sort_random(random_list):  # pylint: disable=redefined-outer-name
         element_count += 1
 
     assert element_count == len(random_list)
+
+
+@pytest.mark.parametrize(
+    "source, value, expected",
+    [
+        ([], 0, [0]),
+        ([0], 1, [1, 0]),
+        ([0], 0, [0, 0]),
+        ([0], 1, [1, 0]),
+        ([2, 0], 3, [3, 0, 2]),
+        ([2, 0], 1, [2, 0, 1]),
+        ([2, 0], -1, [2, 0, -1]),
+    ],
+    ids=[
+        "empty source",
+        "single element source value larger",
+        "single element source value equal",
+        "single element source value smaller",
+        "two elememt source value larger",
+        "two elememt source value between",
+        "two elememt source value smaller",
+    ],
+)
+@pytest.mark.heap
+def test_insert(source, value, expected):
+    """
+    GIVEN source, value to insert and expected final list
+    WHEN the heap is constructed with the source and insert is called with the value
+    THEN the underlying list contains the expected elements in the expected order.
+    """
+    test_heap = heap.Heap(source)
+
+    test_heap.insert(value)
+
+    assert test_heap._list == expected
