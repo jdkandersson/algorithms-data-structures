@@ -1,6 +1,8 @@
 """Tests for the heap."""
 # pylint: disable=protected-access
 
+import random
+
 import pytest
 
 from library import heap
@@ -23,7 +25,6 @@ def test_construct(source, expected_list):
     assert test_heap._list == expected_list
 
 
-@pytest.mark.heap
 @pytest.mark.parametrize(
     "initial, start, end, expected",
     [
@@ -57,6 +58,7 @@ def test_construct(source, expected_list):
         "seven right sub tree",
     ],
 )
+@pytest.mark.heap
 def test_sift_down(initial, start, end, expected):
     """
     GIVEN initial elements for the list of a heap that satisfy the heap property
@@ -107,6 +109,7 @@ def test_sift_down(initial, start, end, expected):
         "seven wrong order sub tree boundary rightmost child",
     ],
 )
+@pytest.mark.heap
 def test_sift_up(initial, start, end, expected):
     """
     GIVEN initial elements for the list of a heap that satisfy the heap property except
@@ -143,6 +146,7 @@ def test_sift_up(initial, start, end, expected):
         "many",
     ],
 )
+@pytest.mark.heap
 def test_heapify(initial, expected):
     """
     GIVEN initial elements
@@ -155,3 +159,69 @@ def test_heapify(initial, expected):
     test_heap._heapify()
 
     assert test_heap._list == expected
+
+
+@pytest.mark.parametrize(
+    "source, expected",
+    [
+        ([], []),
+        ([0], [0]),
+        ([0, 1], [1, 0]),
+        ([1, 0], [1, 0]),
+        ([0, 1, 2], [2, 1, 0]),
+        ([0, 2, 1], [2, 1, 0]),
+        ([1, 0, 2], [2, 1, 0]),
+        ([1, 2, 0], [2, 1, 0]),
+        ([2, 0, 1], [2, 1, 0]),
+        ([2, 1, 0], [2, 1, 0]),
+    ],
+    ids=[
+        "empty",
+        "single",
+        "two unsorted",
+        "two sorted",
+        "three unsorted 1",
+        "three unsorted 2",
+        "three unsorted 3",
+        "three unsorted 4",
+        "three unsorted 5",
+        "three sorted",
+    ],
+)
+@pytest.mark.heap
+def test_sorted(source, expected):
+    """
+    GIVEN source of elements and expected sorted elements
+    WHEN the heap is constructed with the source and sorted is called
+    THEN an iterator is returned with the elements in the expected order.
+    """
+    test_heap = heap.Heap(source)
+
+    returned = list(test_heap.sorted())
+
+    assert returned == expected
+
+
+@pytest.fixture(params=[idx + 1 for idx in range(10)])
+def random_list(request):
+    """Generate list with random integers."""
+    yield [random.randint(0, 100) for _ in range(request.param)]
+
+
+def test_sort_random(random_list):  # pylint: disable=redefined-outer-name
+    """
+    GIVEN random list
+    WHEN a heap is constructed with the list as the source and sorted is called
+    THEN a sorted list of elements is returned.
+    """
+    test_heap = heap.Heap(random_list)
+
+    returned = test_heap.sorted()
+
+    previous = next(returned)
+    element_count = 1
+    for current in returned:
+        assert current <= previous
+        element_count += 1
+
+    assert element_count == len(random_list)

@@ -109,3 +109,37 @@ class Heap:
         while start >= 0:
             self._sift_down(start, len(self._list) - 1)
             start -= 1
+
+    def sorted(self):
+        """
+        Sort the elements in the heap.
+
+        Assume that the heap already satisfies the heap property.
+
+        Returns:
+            Iterator over the heap where elements are returned in sorted order.
+
+        """
+        start = 0
+        end = len(self._list) - 1
+
+        # Sorting
+        while end > 0:
+            root_value = self._list[0]
+            self._list[0] = self._list[end]
+            self._list[end] = root_value
+            end -= 1
+            self._sift_down(start, end)
+
+        # Reversing the order
+        start = 0
+        end = len(self._list) - 1
+        while start < end:
+            end_value = self._list[end]
+            self._list[end] = self._list[start]
+            self._list[start] = end_value
+
+            start += 1
+            end -= 1
+
+        return iter(self._list)
