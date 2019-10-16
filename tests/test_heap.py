@@ -301,7 +301,7 @@ def test_extract_max(source, expected_value, expected_list):
     "source, expected_result", [(None, True), ([0], False)], ids=["empty", "not empty"]
 )
 @pytest.mark.heap
-def test_empty(source, expected_result):
+def test_is_empty(source, expected_result):
     """
     GIVEN source for heap and expected result
     WHEN heap is constructed with the source and is_empty is called
@@ -312,3 +312,20 @@ def test_empty(source, expected_result):
     result = test_heap.is_empty()
 
     assert result == expected_result
+
+
+@pytest.mark.parametrize(
+    "source, expected_size", [(None, 0), ([0], 1)], ids=["empty", "not empty"]
+)
+@pytest.mark.heap
+def test_size(source, expected_size):
+    """
+    GIVEN source for heap and expected size
+    WHEN heap is constructed with the source and len is called
+    THEN the expected size is returned.
+    """
+    test_heap = heap.Heap(source)
+
+    size = len(test_heap)
+
+    assert size == expected_size

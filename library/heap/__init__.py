@@ -185,3 +185,13 @@ class Heap:
 
         """
         return len(self._list) == 0
+
+    def __len__(self):
+        """
+        Get the number of elements in the heap.
+
+        Returns:
+            The number of elements in the heap.
+
+        """
+        return self._list.__len__()
