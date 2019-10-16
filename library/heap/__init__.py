@@ -91,3 +91,10 @@ class Heap:
                 parent = self.parent(child)
             else:
                 return
+
+    def heapify(self):
+        """Turn the underlying list into a heap."""
+        start = self.parent(len(self._list) - 1)
+        while start >= 0:
+            self._sift_down(start, len(self._list) - 1)
+            start -= 1

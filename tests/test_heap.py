@@ -103,3 +103,38 @@ def test_sift_up(initial, start, end, expected):
     test_heap._sift_up(start, end)
 
     assert test_heap._list == expected
+
+
+@pytest.mark.parametrize(
+    "initial, expected",
+    [
+        ([], []),
+        ([0], [0]),
+        ([1, 0], [1, 0]),
+        ([0, 1], [1, 0]),
+        ([2, 1, 0], [2, 1, 0]),
+        ([0, 1, 2], [2, 1, 0]),
+        ([0, 1, 2, 3, 4, 5, 6], [6, 4, 5, 3, 1, 0, 2]),
+    ],
+    ids=[
+        "empty",
+        "single",
+        "two right order",
+        "two wrong order",
+        "three right order",
+        "three wrong order",
+        "many",
+    ],
+)
+def test_heapify(initial, expected):
+    """
+    GIVEN initial elements
+    WHEN heapify is called
+    THEN the elements are in the expected order.
+    """
+    test_heap = heap.Heap()
+    test_heap._list = initial
+
+    test_heap.heapify()
+
+    assert test_heap._list == expected
