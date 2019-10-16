@@ -92,7 +92,7 @@ class Heap:
             else:
                 return
 
-    def heapify(self):
+    def _heapify(self):
         """Turn the underlying list into a heap."""
         start = self.parent(len(self._list) - 1)
         while start >= 0:

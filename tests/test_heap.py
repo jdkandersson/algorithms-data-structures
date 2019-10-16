@@ -129,12 +129,12 @@ def test_sift_up(initial, start, end, expected):
 def test_heapify(initial, expected):
     """
     GIVEN initial elements
-    WHEN heapify is called
+    WHEN _heapify is called
     THEN the elements are in the expected order.
     """
     test_heap = heap.Heap()
     test_heap._list = initial
 
-    test_heap.heapify()
+    test_heap._heapify()
 
     assert test_heap._list == expected
